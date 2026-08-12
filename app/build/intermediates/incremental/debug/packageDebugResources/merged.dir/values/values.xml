@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="priority_levels">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+    </string-array>
+    <color name="ic_launcher_background">#F9F9F9</color>
+    <string name="gcm_defaultSenderId" translatable="false">799236410231</string>
+    <string name="google_api_key" translatable="false">AIzaSyBl-iQs6myC2BQOHW4qxS9kbtnQvgTbqZs</string>
+    <string name="google_app_id" translatable="false">1:799236410231:android:483573d5945279ab986f72</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBl-iQs6myC2BQOHW4qxS9kbtnQvgTbqZs</string>
+    <string name="google_storage_bucket" translatable="false">sucs-eedff.firebasestorage.app</string>
+    <string name="project_id" translatable="false">sucs-eedff</string>
+    <style name="Theme.SUCS" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">#b02f00</item>
+        <item name="colorPrimaryVariant">#ff5722</item>
+        <item name="colorSecondary">#006e1c</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+    </style>
+</resources>
