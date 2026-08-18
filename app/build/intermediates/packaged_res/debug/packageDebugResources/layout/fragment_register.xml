@@ -82,16 +82,59 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:background="#f3f3f3"
-            android:layout_marginBottom="18dp"/>
+            android:layout_marginBottom="12dp"/>
 
-        <Button
-            android:id="@+id/registerButton"
+        <EditText
+            android:id="@+id/tnebIdInput"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="Register"
+            android:hint="TNEB Customer ID"
+            android:inputType="text"
+            android:padding="12dp"
+            android:background="#f3f3f3"
+            android:layout_marginBottom="12dp"/>
+
+        <Button
+            android:id="@+id/verifyButton"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="Verify TNEB ID"
             android:textAllCaps="false"
-            android:backgroundTint="#ff5722"
-            android:textColor="#ffffff"/>
+            android:backgroundTint="#5b4039"
+            android:textColor="#ffffff"
+            android:layout_marginBottom="6dp"/>
+
+        <TextView
+            android:id="@+id/tnebVerifyStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:textColor="#2e7d32"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:layout_marginBottom="12dp"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/registerButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Register"
+                android:textAllCaps="false"
+                android:backgroundTint="#bf360c"
+                android:textColor="#ffffff"/>
+
+            <ProgressBar
+                android:id="@+id/registerProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminateTint="#bf360c"
+                android:visibility="gone" />
+        </FrameLayout>
 
     </LinearLayout>
 </ScrollView>

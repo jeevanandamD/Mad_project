@@ -74,14 +74,27 @@
             android:padding="12dp"
             android:layout_marginBottom="18dp"/>
 
-        <Button
-            android:id="@+id/submitComplaintButton"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="Submit Complaint"
-            android:textAllCaps="false"
-            android:backgroundTint="#b02f00"
-            android:textColor="#ffffff"/>
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/submitComplaintButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Submit Complaint"
+                android:textAllCaps="false"
+                android:backgroundTint="#b02f00"
+                android:textColor="#ffffff"/>
+
+            <ProgressBar
+                android:id="@+id/submitProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminateTint="#b02f00"
+                android:visibility="gone" />
+        </FrameLayout>
 
     </LinearLayout>
 </ScrollView>

@@ -1,0 +1,5 @@
+anon  key = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImliamFxem1ubW5zYXN1bGphYml2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY1MTE1NDMsImV4cCI6MjEwMjA4NzU0M30.NXsvXnfI09O7ybYHms7uE8fTvuMSeEbD3WD19myKB_I
+
+secret key = sb_secret_HeHkuySjEXt0j20ntaNz-A_TjA1Ii4z
+
+project ID = https://ibjaqzmnmnsasuljabiv.supabase.co

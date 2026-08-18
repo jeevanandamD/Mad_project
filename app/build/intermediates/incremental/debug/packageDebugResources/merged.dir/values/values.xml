@@ -1,23 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="complaint_statuses">
+        <item>Pending</item>
+        <item>Assigned</item>
+        <item>In Progress</item>
+        <item>Resolved</item>
+        <item>Closed</item>
+    </string-array>
+    <string-array name="complaint_types">
+        <item>Power Failure / Blackout</item>
+        <item>Transformer Explosion / Oil Leakage</item>
+        <item>High Voltage Sparking / Fire Hazard</item>
+        <item>Voltage Fluctuation / Surge</item>
+        <item>Street Light Failure</item>
+        <item>Meter Burnt / Faulty Reading</item>
+        <item>Service Wire Snapped / Low Hanging</item>
+        <item>New Electrical Connection Issue</item>
+        <item>Other Electrical Breakdown</item>
+    </string-array>
+    <string-array name="emergency_statuses">
+        <item>Open</item>
+        <item>In Progress</item>
+        <item>Resolved</item>
+        <item>Dismissed</item>
+    </string-array>
     <string-array name="priority_levels">
         <item>Low</item>
         <item>Medium</item>
         <item>High</item>
+        <item>Urgent</item>
+    </string-array>
+    <string-array name="worker_task_statuses">
+        <item>Assigned</item>
+        <item>In Progress</item>
+        <item>Resolved</item>
     </string-array>
     <color name="ic_launcher_background">#F9F9F9</color>
-    <string name="gcm_defaultSenderId" translatable="false">799236410231</string>
-    <string name="google_api_key" translatable="false">AIzaSyBl-iQs6myC2BQOHW4qxS9kbtnQvgTbqZs</string>
-    <string name="google_app_id" translatable="false">1:799236410231:android:483573d5945279ab986f72</string>
-    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBl-iQs6myC2BQOHW4qxS9kbtnQvgTbqZs</string>
-    <string name="google_storage_bucket" translatable="false">sucs-eedff.firebasestorage.app</string>
-    <string name="project_id" translatable="false">sucs-eedff</string>
-    <style name="Theme.SUCS" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">#b02f00</item>
-        <item name="colorPrimaryVariant">#ff5722</item>
-        <item name="colorSecondary">#006e1c</item>
+    <color name="primary">#b02f00</color>
+    <color name="priority_high">#D84315</color>
+    <color name="priority_low">#2E7D32</color>
+    <color name="priority_medium">#F57F17</color>
+    <color name="priority_urgent">#C62828</color>
+    <color name="status_assigned">#0277BD</color>
+    <color name="status_closed">#546E7A</color>
+    <color name="status_in_progress">#E65100</color>
+    <color name="status_pending">#E65100</color>
+    <color name="status_resolved">#2E7D32</color>
+    <string name="app_name">PowerFix</string>
+    <string name="app_name_legacy">SUCS</string>
+    <string name="app_tagline">Smart Electricity Complaint &amp; Worker Tracking System</string>
+    <string name="load_failed">Failed to load. Pull back and try again.</string>
+    <string name="not_signed_in">You are not signed in. Please log in.</string>
+    <style name="Theme.PowerFix" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">#FF5722</item>
+        <item name="colorPrimaryVariant">#E64A19</item>
+        <item name="colorSecondary">#006E1C</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">@android:color/white</item>
     </style>
+    <style name="Theme.SUCS" parent="Theme.PowerFix"/>
 </resources>

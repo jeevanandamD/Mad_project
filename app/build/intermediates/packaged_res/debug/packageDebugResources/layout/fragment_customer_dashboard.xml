@@ -1,78 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dp"
     android:background="#f9f9f9">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Customer Dashboard"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        android:textColor="#1a1c1c"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="20dp"/>
-
-    <LinearLayout
-        android:id="@+id/registerComplaintCard"
-        android:layout_width="match_parent"
-        android:layout_height="110dp"
         android:orientation="vertical"
-        android:background="#ff5722"
-        android:padding="18dp"
-        android:layout_marginBottom="16dp"
-        android:gravity="center_vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Register New Complaint"
-            android:textColor="#ffffff"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Report issues for fast resolution"
-            android:textColor="#ffffff"
-            android:textSize="14sp"/>
-    </LinearLayout>
+        android:padding="20dp">
 
-    <LinearLayout
-        android:id="@+id/trackComplaintCard"
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:orientation="vertical"
-        android:background="#ffffff"
-        android:padding="16dp"
-        android:layout_marginBottom="16dp"
-        android:gravity="center_vertical">
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Track Complaint Status"
-            android:textColor="#1a1c1c"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-    </LinearLayout>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="16dp">
 
-    <LinearLayout
-        android:id="@+id/emergencyCard"
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:orientation="vertical"
-        android:background="#ffffff"
-        android:padding="16dp"
-        android:gravity="center_vertical">
-        <TextView
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="PowerFix Dashboard"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#1a1c1c" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⚡ Live Grid"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="#006E1C"
+                android:background="#E8F5E9"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp" />
+        </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/registerComplaintCard"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Emergency Contact"
-            android:textColor="#1a1c1c"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-    </LinearLayout>
+            android:layout_marginBottom="14dp"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FF5722"
+            android:clickable="true"
+            android:focusable="true">
 
-</LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⚡ Report Electricity Issue"
+                    android:textColor="#ffffff"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Power failure, transformer breakdown, sparks, or meter faults"
+                    android:textColor="#ffffff"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/trackComplaintCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="1dp"
+            app:cardBackgroundColor="#ffffff"
+            app:strokeWidth="1dp"
+            app:strokeColor="#e0e0e0"
+            android:clickable="true"
+            android:focusable="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📍 Track Technician &amp; Tickets"
+                    android:textColor="#1a1c1c"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Live status, technician assignment &amp; resolution timeline"
+                    android:textColor="#5b4039"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/emergencyCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="1dp"
+            app:cardBackgroundColor="#FFF8E1"
+            app:strokeWidth="1dp"
+            app:strokeColor="#FFE082"
+            android:clickable="true"
+            android:focusable="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🚨 Emergency Hazard SOS"
+                    android:textColor="#B71C1C"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Live wire snap, electrical fire risk, transformer explosion"
+                    android:textColor="#5b4039"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <Button
+            android:id="@+id/logoutButton"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:text="Sign Out"
+            android:textAllCaps="false"
+            android:backgroundTint="#546E7A"
+            android:textColor="#ffffff"/>
+    </LinearLayout>
+</ScrollView>

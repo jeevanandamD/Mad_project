@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="ic_launcher_background">#F9F9F9</color>
+    <color name="primary">#b02f00</color>
+    <color name="status_pending">#E65100</color>
+    <color name="status_assigned">#0277BD</color>
+    <color name="status_in_progress">#E65100</color>
+    <color name="status_resolved">#2E7D32</color>
+    <color name="status_closed">#546E7A</color>
+    <color name="priority_urgent">#C62828</color>
+    <color name="priority_high">#D84315</color>
+    <color name="priority_medium">#F57F17</color>
+    <color name="priority_low">#2E7D32</color>
 </resources>

@@ -1,71 +1,108 @@
-# SUCS Android App
+# PowerFix – Smart Electricity Complaint & Worker Tracking System
 
-This project converts the provided SUCS design mockups into a functional Android app shell for:
+PowerFix is a role-based electricity breakdown reporting, field technician dispatching, and live tracking platform.
 
-- Customer dashboard and complaint registration
-- Admin dashboard and complaint monitoring
-- Worker availability and task management
-- Firebase Authentication + Firestore-backed role logic
-- Real-time complaint and emergency request flows
+---
 
-## Project Structure
+## ⚡ What is PowerFix?
 
-- app/src/main/java/com/example/sucs
-- app/src/main/res/layout
-- app/src/main/res/values
+PowerFix provides dedicated workflows for three key user roles:
+1. **Customer**: Report power outages, meter faults, voltage surges, and sparks; track assigned field technicians in real-time.
+2. **Field Worker / Technician**: Toggle duty availability, receive dispatch tickets, navigate to breakdowns, and submit work completion updates.
+3. **Administrator / Dispatcher**: Triage incoming grid complaints, assign available field technicians, write resolution updates, and manage emergency hazard alerts.
 
-## Supabase Setup
+---
 
-1. Create a Supabase project at https://app.supabase.com and open the project dashboard.
-2. In Project Settings -> API, copy the **Project URL** and the **anon/public** key.
-3. Add the following to `local.properties` in the project root (`android_app/local.properties`) — this file is typically excluded from version control:
+## 🏗️ Architecture & Tech Stack
 
-   SUPABASE_URL=https://your-project-id.supabase.co
-   SUPABASE_ANON_KEY=your-anon-key
+- **Platform**: Android Native (Kotlin 2.1.21, minSdk 30, targetSdk 34)
+- **UI Framework**: Android Views + Material Components (Material 3), ViewBinding
+- **Backend & Database**: **Supabase** via `supabase-kt` 3.2.0 (GoTrue Auth, PostgREST, Realtime, Storage)
+- **Serialization**: `kotlinx.serialization` with ISO-8601 timestamps
+- **Networking**: `ktor-client-android` 3.0.3 engine + Coroutines Lifecycle
 
-   Alternatively you can set the environment variables SUPABASE_URL and SUPABASE_ANON_KEY on your build machine.
-4. In the Supabase SQL editor or Table editor, create a `profiles` table with at least these columns:
-   - `uid` (text, primary key)
-   - `email` (text)
-   - `name` (text)
-   - `role` (text)
-   - `phone` (text)
-   - `address` (text)
+---
 
-5. The app uses Supabase GoTrue for authentication and PostgREST for the `profiles` table. See the `app/build.gradle.kts` dependencies for the libraries used.
+## 📂 Project Structure
 
-## Role model
-
-User documents in Firestore should include:
-
-```json
-{
-  "uid": "...",
-  "email": "user@example.com",
-  "name": "User Name",
-  "role": "customer",
-  "phone": "+1234567890",
-  "address": "Street, City",
-  "available": true
-}
+```
+app/src/main/java/com/example/powerfix/
+├── MainActivity.kt                      # Main router based on authenticated user role
+├── PowerFixApplication.kt               # Application entry point & Supabase client container
+├── data/
+│   ├── Complaint.kt                     # Complaint work-order model with ETA computation
+│   ├── UserProfile.kt                   # User entity (Customer, Worker, Admin)
+│   ├── EmergencyRequest.kt              # Emergency SOS hazard request model
+│   └── PowerFixPrefs.kt                 # Centralized preferences with automatic SUCS legacy migration
+└── ui/
+    ├── admin/
+    │   ├── AdminDashboardFragment.kt    # Dispatcher console
+    │   ├── ComplaintsListFragment.kt    # Complaint assignment & admin reply dialog
+    │   └── EmergencyRequestsFragment.kt # Hazard SOS management dialog
+    ├── auth/
+    │   ├── LoginFragment.kt             # Unified role-aware authentication
+    │   └── RegisterFragment.kt          # Customer self-registration (server-side role guard)
+    ├── common/
+    │   ├── AuthUtil.kt                  # Secure sign-out and session clearance
+    │   ├── ComplaintAdapter.kt          # RecyclerView adapter with priority/status badges & replies
+    │   └── EmergencyRequestAdapter.kt   # SOS request adapter
+    ├── customer/
+    │   ├── CustomerDashboardFragment.kt # Customer quick actions
+    │   ├── RegisterComplaintFragment.kt # Pre-filled smart complaint lodging
+    │   ├── ComplaintTrackingFragment.kt # Real-time tracking & detail inspection
+    │   └── EmergencyContactFragment.kt  # SOS emergency broadcast
+    └── worker/
+        ├── WorkerDashboardFragment.kt   # Technician workbench
+        ├── WorkerAvailabilityFragment.kt# Live availability status toggle (Active/Inactive)
+        └── WorkerTasksFragment.kt       # Assigned work orders & task progress dialog
 ```
 
-Allowed roles:
-- admin
-- worker
-- customer
+---
 
-## Open in Android Studio
+## 🔄 Project Rename & Backward Compatibility (from "sucs" to "power-fix")
 
-Open the `android_app` folder in Android Studio and let Gradle sync.
+The project has been migrated from the legacy name `"sucs"` to `"power-fix"` with zero disruption to existing databases or user sessions:
 
-## Build validation
+1. **Package & Namespace**: Renamed to `com.example.powerfix`.
+2. **Preferences Migration (`PowerFixPrefs`)**: Automatically detects existing `sucs_prefs` and migrates cached credentials and worker availability into `powerfix_prefs` while maintaining dual-write support.
+3. **Application Alias**: `typealias SucsApplication = PowerFixApplication` preserved for any legacy reflective/manifest references.
+4. **Theme Aliases**: `Theme.SUCS` is preserved as a style alias pointing to `Theme.PowerFix`.
+5. **Database Interoperability**: Preserves all existing table structures (`profiles`, `complaints`, `emergency_requests`) with enhanced column definitions and triggers.
 
-This project was validated with the Gradle wrapper in the workspace using:
+---
+
+## ✨ Newly Added Features (Not in Legacy SUCS)
+
+1. **Smart Electricity Complaint Presets**: Specialized electrical fault categories (Blackouts, Transformer Explosions, Voltage Surges, Sparks/Hazards, Meter Faults, Wire Snapping).
+2. **Live ETA & Dispatch Estimation Engine**: Dynamic calculation of technician response times based on priority (`Urgent`, `High`, `Medium`, `Low`) and resolution progress.
+3. **Interactive Worker Dispatch Dialog**: Administrators can view real-time worker availability (`Available` vs `Busy`) directly when assigning tickets.
+4. **Realtime Technician Task Progress**: Workers can update task progress (`Assigned` → `In Progress` → `Resolved`) with status badges.
+5. **Automatic Profile Pre-population**: Customer registration and complaint forms automatically pre-fill user name, mobile number, and address from their account.
+
+---
+
+## 🛠️ Database Setup (Supabase)
+
+Run the SQL migration script located at [`supabase/migrations/20260816_powerfix_upgrade.sql`](supabase/migrations/20260816_powerfix_upgrade.sql) in your **Supabase Dashboard > SQL Editor**.
+
+### Role Promotion Queries
+```sql
+-- Promote user to Administrator
+UPDATE public.profiles SET role = 'admin' WHERE email = 'admin@example.com';
+
+-- Promote user to Field Worker (Active)
+UPDATE public.profiles SET role = 'worker', available = true WHERE email = 'worker@example.com';
+```
+
+---
+
+## 🚀 Build and Run
 
 ```bash
-cd android_app
-./gradlew.bat help
-```
+# Clean and assemble debug APK
+./gradlew.bat assembleDebug
 
-The Gradle task completed successfully.
+# Install on connected Android device/emulator
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+adb shell am start -n com.example.powerfix/.MainActivity
+```

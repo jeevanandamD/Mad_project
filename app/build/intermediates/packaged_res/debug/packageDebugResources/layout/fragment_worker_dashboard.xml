@@ -9,30 +9,49 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Worker Dashboard"
-        android:textSize="26sp"
+        android:text="PowerFix Field Worker"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="#1a1c1c"
         android:layout_marginTop="24dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="6dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Duty status, assigned breakdowns, and live progress"
+        android:textSize="13sp"
+        android:textColor="#5b4039"
+        android:layout_marginBottom="24dp"/>
 
     <Button
         android:id="@+id/availabilityButton"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:text="Mark Availability"
+        android:text="⚡ Mark Duty Availability"
         android:textAllCaps="false"
         android:layout_marginBottom="12dp"
-        android:backgroundTint="#006e1c"
+        android:backgroundTint="#006E1C"
         android:textColor="#ffffff"/>
 
     <Button
         android:id="@+id/viewAssignedButton"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:text="View Assigned Complaints"
+        android:text="📋 View Assigned Work Orders"
         android:textAllCaps="false"
-        android:backgroundTint="#ff5722"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="#FF5722"
+        android:textColor="#ffffff"/>
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
+        android:text="Sign Out"
+        android:textAllCaps="false"
+        android:backgroundTint="#546E7A"
         android:textColor="#ffffff"/>
 
 </LinearLayout>

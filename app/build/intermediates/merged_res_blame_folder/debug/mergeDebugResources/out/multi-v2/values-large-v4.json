@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.sucs.app-mergeDebugResources-53:/values-large-v4/values-large-v4.xml",
+            "outputFile": "com.example.powerfix.app-mergeDebugResources-46:/values-large-v4/values-large-v4.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Jeevanandam\\.gradle\\caches\\8.14.5\\transforms\\cca709e54ae57ea8564e0e71b845f4ac\\transformed\\appcompat-1.7.0\\res\\values-large-v4\\values-large-v4.xml",
+                    "source": "C:\\Users\\Jeevanandam\\.gradle\\caches\\8.14.5\\transforms\\98d071a615772978fae3fa74393e6955\\transformed\\appcompat-1.7.0\\res\\values-large-v4\\values-large-v4.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Jeevanandam\\.gradle\\caches\\8.14.5\\transforms\\74126ae08e615b9b0a3fcbfb80a48652\\transformed\\material-1.12.0\\res\\values-large-v4\\values-large-v4.xml",
+                    "source": "C:\\Users\\Jeevanandam\\.gradle\\caches\\8.14.5\\transforms\\c589350382a324528b64af3f8d562046\\transformed\\material-1.12.0\\res\\values-large-v4\\values-large-v4.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",

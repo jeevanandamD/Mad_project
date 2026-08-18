@@ -16,16 +16,33 @@
         android:layout_marginTop="24dp"
         android:layout_marginBottom="16dp"/>
 
-    <ScrollView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ProgressBar
+            android:id="@+id/listProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
         <TextView
-            android:id="@+id/tasksText"
+            android:id="@+id/emptyText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Loading tasks..."
-            android:textColor="#1a1c1c"
-            android:textSize="16sp"/>
-    </ScrollView>
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="#5b4039"
+            android:text="No tasks assigned."
+            android:visibility="gone" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tasksRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="16dp" />
+    </FrameLayout>
 </LinearLayout>

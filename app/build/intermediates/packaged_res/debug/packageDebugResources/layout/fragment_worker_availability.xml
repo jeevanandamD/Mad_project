@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,19 +10,74 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Availability"
+        android:text="Worker Availability"
         android:textSize="26sp"
         android:textStyle="bold"
         android:textColor="#1a1c1c"
         android:layout_marginTop="24dp"
-        android:layout_marginBottom="28dp"/>
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set your current duty status so admins know if you are available to receive task assignments."
+        android:textSize="14sp"
+        android:textColor="#5b4039"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Current Status Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/statusCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="#e0e0e0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Current Status"
+                android:textSize="13sp"
+                android:textColor="#757575"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/currentStatusText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Loading..."
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#1a1c1c" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <ProgressBar
+        android:id="@+id/availabilityProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:layout_marginBottom="16dp" />
 
     <Button
         android:id="@+id/activeButton"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:text="Active"
+        android:text="Mark as Active (Available)"
         android:textAllCaps="false"
+        android:textSize="16sp"
         android:layout_marginBottom="12dp"
         android:backgroundTint="#006e1c"
         android:textColor="#ffffff"/>
@@ -30,9 +86,10 @@
         android:id="@+id/inactiveButton"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:text="Inactive"
+        android:text="Mark as Inactive (Off-Duty)"
         android:textAllCaps="false"
-        android:backgroundTint="#d9d9d9"
-        android:textColor="#1a1c1c"/>
+        android:textSize="16sp"
+        android:backgroundTint="#546E7A"
+        android:textColor="#ffffff"/>
 
 </LinearLayout>

@@ -1,5 +1,0 @@
-com.example.sucs.test.app-jetified-core-1.6.1-0 C:\Users\Jeevanandam\.gradle\caches\8.14.5\transforms\43005c824cd5fcce2fd37adbe1a4ea20\transformed\jetified-core-1.6.1\res
-com.example.sucs.test.app-androidTest-1 D:\stitch_smart_utility_complaint_system\android_app\app\build\generated\res\resValues\androidTest\debug
-com.example.sucs.test.app-mergeDebugAndroidTestResources-2 D:\stitch_smart_utility_complaint_system\android_app\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
-com.example.sucs.test.app-mergeDebugAndroidTestResources-3 D:\stitch_smart_utility_complaint_system\android_app\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
-com.example.sucs.test.app-debugAndroidTest-4 D:\stitch_smart_utility_complaint_system\android_app\app\build\intermediates\merged_res\debugAndroidTest\mergeDebugAndroidTestResources

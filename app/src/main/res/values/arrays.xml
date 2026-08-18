@@ -4,5 +4,39 @@
         <item>Low</item>
         <item>Medium</item>
         <item>High</item>
+        <item>Urgent</item>
+    </string-array>
+
+    <string-array name="complaint_statuses">
+        <item>Pending</item>
+        <item>Assigned</item>
+        <item>In Progress</item>
+        <item>Resolved</item>
+        <item>Closed</item>
+    </string-array>
+
+    <string-array name="worker_task_statuses">
+        <item>Assigned</item>
+        <item>In Progress</item>
+        <item>Resolved</item>
+    </string-array>
+
+    <string-array name="emergency_statuses">
+        <item>Open</item>
+        <item>In Progress</item>
+        <item>Resolved</item>
+        <item>Dismissed</item>
+    </string-array>
+
+    <string-array name="complaint_types">
+        <item>Power Failure / Blackout</item>
+        <item>Transformer Explosion / Oil Leakage</item>
+        <item>High Voltage Sparking / Fire Hazard</item>
+        <item>Voltage Fluctuation / Surge</item>
+        <item>Street Light Failure</item>
+        <item>Meter Burnt / Faulty Reading</item>
+        <item>Service Wire Snapped / Low Hanging</item>
+        <item>New Electrical Connection Issue</item>
+        <item>Other Electrical Breakdown</item>
     </string-array>
 </resources>

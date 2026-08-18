@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PowerFix</string>
+    <string name="app_name_legacy">SUCS</string>
+    <string name="app_tagline">Smart Electricity Complaint &amp; Worker Tracking System</string>
+    <string name="not_signed_in">You are not signed in. Please log in.</string>
+    <string name="load_failed">Failed to load. Pull back and try again.</string>
+</resources>

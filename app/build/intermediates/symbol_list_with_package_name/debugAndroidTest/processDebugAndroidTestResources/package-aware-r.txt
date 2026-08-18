@@ -1,3 +1,0 @@
-com.example.sucs.test
-style WhiteBackgroundDialogTheme
-style WhiteBackgroundTheme

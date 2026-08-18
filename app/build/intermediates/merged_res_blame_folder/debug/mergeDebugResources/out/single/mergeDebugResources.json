@@ -1,62 +1,86 @@
 [
     {
-        "merged": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-debug-55:\\layout_fragment_complaint_tracking.xml.flat",
-        "source": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-main-57:\\layout\\fragment_complaint_tracking.xml"
+        "merged": "com.example.powerfix.app-debug-48:/layout_fragment_worker_dashboard.xml.flat",
+        "source": "com.example.powerfix.app-main-50:/layout/fragment_worker_dashboard.xml"
     },
     {
-        "merged": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-debug-55:\\layout_fragment_emergency_contact.xml.flat",
-        "source": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-main-57:\\layout\\fragment_emergency_contact.xml"
+        "merged": "com.example.powerfix.app-debug-48:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.example.powerfix.app-main-50:/mipmap-anydpi-v26/ic_launcher.xml"
     },
     {
-        "merged": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-debug-55:\\layout_fragment_worker_dashboard.xml.flat",
-        "source": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-main-57:\\layout\\fragment_worker_dashboard.xml"
+        "merged": "com.example.powerfix.app-debug-48:/layout_fragment_worker_availability.xml.flat",
+        "source": "com.example.powerfix.app-main-50:/layout/fragment_worker_availability.xml"
     },
     {
-        "merged": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-debug-55:\\layout_fragment_complaints_list.xml.flat",
-        "source": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-main-57:\\layout\\fragment_complaints_list.xml"
+        "merged": "com.example.powerfix.app-debug-48:/layout_dialog_customer_complaint_detail.xml.flat",
+        "source": "com.example.powerfix.app-main-50:/layout/dialog_customer_complaint_detail.xml"
     },
     {
-        "merged": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-debug-55:\\layout_fragment_customer_dashboard.xml.flat",
-        "source": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-main-57:\\layout\\fragment_customer_dashboard.xml"
+        "merged": "com.example.powerfix.app-debug-48:/layout_dialog_emergency_action.xml.flat",
+        "source": "com.example.powerfix.app-main-50:/layout/dialog_emergency_action.xml"
     },
     {
-        "merged": "com.example.sucs.app-debug-55:/drawable_ic_launcher_foreground.xml.flat",
-        "source": "com.example.sucs.app-main-57:/drawable/ic_launcher_foreground.xml"
+        "merged": "com.example.powerfix.app-debug-48:/layout_fragment_emergency_contact.xml.flat",
+        "source": "com.example.powerfix.app-main-50:/layout/fragment_emergency_contact.xml"
     },
     {
-        "merged": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-debug-55:\\layout_fragment_worker_availability.xml.flat",
-        "source": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-main-57:\\layout\\fragment_worker_availability.xml"
+        "merged": "com.example.powerfix.app-debug-48:/layout_fragment_worker_tasks.xml.flat",
+        "source": "com.example.powerfix.app-main-50:/layout/fragment_worker_tasks.xml"
     },
     {
-        "merged": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-debug-55:\\layout_fragment_register_complaint.xml.flat",
-        "source": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-main-57:\\layout\\fragment_register_complaint.xml"
+        "merged": "com.example.powerfix.app-debug-48:/layout_fragment_emergency_requests.xml.flat",
+        "source": "com.example.powerfix.app-main-50:/layout/fragment_emergency_requests.xml"
     },
     {
-        "merged": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-debug-55:\\layout_fragment_login.xml.flat",
-        "source": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-main-57:\\layout\\fragment_login.xml"
+        "merged": "com.example.powerfix.app-debug-48:/layout_fragment_complaints_list.xml.flat",
+        "source": "com.example.powerfix.app-main-50:/layout/fragment_complaints_list.xml"
     },
     {
-        "merged": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-debug-55:\\layout_fragment_emergency_requests.xml.flat",
-        "source": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-main-57:\\layout\\fragment_emergency_requests.xml"
+        "merged": "com.example.powerfix.app-debug-48:/layout_dialog_worker_task_action.xml.flat",
+        "source": "com.example.powerfix.app-main-50:/layout/dialog_worker_task_action.xml"
     },
     {
-        "merged": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-debug-55:\\layout_activity_main.xml.flat",
-        "source": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-main-57:\\layout\\activity_main.xml"
+        "merged": "com.example.powerfix.app-debug-48:/layout_fragment_register.xml.flat",
+        "source": "com.example.powerfix.app-main-50:/layout/fragment_register.xml"
     },
     {
-        "merged": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-debug-55:\\layout_fragment_admin_dashboard.xml.flat",
-        "source": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-main-57:\\layout\\fragment_admin_dashboard.xml"
+        "merged": "com.example.powerfix.app-debug-48:/layout_activity_main.xml.flat",
+        "source": "com.example.powerfix.app-main-50:/layout/activity_main.xml"
     },
     {
-        "merged": "com.example.sucs.app-debug-55:/mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "com.example.sucs.app-main-57:/mipmap-anydpi-v26/ic_launcher.xml"
+        "merged": "com.example.powerfix.app-debug-48:/layout_item_complaint.xml.flat",
+        "source": "com.example.powerfix.app-main-50:/layout/item_complaint.xml"
     },
     {
-        "merged": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-debug-55:\\layout_fragment_register.xml.flat",
-        "source": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-main-57:\\layout\\fragment_register.xml"
+        "merged": "com.example.powerfix.app-debug-48:/layout_dialog_admin_complaint_action.xml.flat",
+        "source": "com.example.powerfix.app-main-50:/layout/dialog_admin_complaint_action.xml"
     },
     {
-        "merged": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-debug-55:\\layout_fragment_worker_tasks.xml.flat",
-        "source": "C:\\Users\\Jeevanandam\\.gradle\\daemon\\8.14.5\\com.example.sucs.app-main-57:\\layout\\fragment_worker_tasks.xml"
+        "merged": "com.example.powerfix.app-debug-48:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.example.powerfix.app-main-50:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.example.powerfix.app-debug-48:/layout_item_emergency_request.xml.flat",
+        "source": "com.example.powerfix.app-main-50:/layout/item_emergency_request.xml"
+    },
+    {
+        "merged": "com.example.powerfix.app-debug-48:/layout_fragment_admin_dashboard.xml.flat",
+        "source": "com.example.powerfix.app-main-50:/layout/fragment_admin_dashboard.xml"
+    },
+    {
+        "merged": "com.example.powerfix.app-debug-48:/layout_fragment_complaint_tracking.xml.flat",
+        "source": "com.example.powerfix.app-main-50:/layout/fragment_complaint_tracking.xml"
+    },
+    {
+        "merged": "com.example.powerfix.app-debug-48:/layout_fragment_register_complaint.xml.flat",
+        "source": "com.example.powerfix.app-main-50:/layout/fragment_register_complaint.xml"
+    },
+    {
+        "merged": "com.example.powerfix.app-debug-48:/layout_fragment_login.xml.flat",
+        "source": "com.example.powerfix.app-main-50:/layout/fragment_login.xml"
+    },
+    {
+        "merged": "com.example.powerfix.app-debug-48:/layout_fragment_customer_dashboard.xml.flat",
+        "source": "com.example.powerfix.app-main-50:/layout/fragment_customer_dashboard.xml"
     }
 ]

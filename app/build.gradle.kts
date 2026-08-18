@@ -1,23 +1,28 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    kotlin("plugin.serialization") version "1.9.24"
+    kotlin("plugin.serialization") version "2.1.21"
 }
 
-val localProperties = java.util.Properties().apply {
-    file(rootDir, "local.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
+import java.util.Properties
+import java.io.File
+
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.inputStream().use { localProperties.load(it) }
 }
 
 val SUPABASE_URL_PROP = localProperties.getProperty("SUPABASE_URL") ?: System.getenv("SUPABASE_URL")
 val SUPABASE_ANON_KEY_PROP = localProperties.getProperty("SUPABASE_ANON_KEY") ?: System.getenv("SUPABASE_ANON_KEY")
 
 android {
-    namespace = "com.example.sucs"
+    namespace = "com.example.powerfix"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.sucs"
-        minSdk = 26
+        applicationId = "com.example.powerfix"
+        minSdk = 30
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -48,16 +53,18 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
 dependencies {
-    implementation("io.github.jan-tennert.supabase:gotrue-kt:3.1.4")
-    implementation("io.github.jan-tennert.supabase:postgrest-kt:3.1.4")
-    implementation("io.github.jan-tennert.supabase:realtime-kt:3.1.4")
-    implementation("io.github.jan-tennert.supabase:storage-kt:3.1.4")
-    implementation("io.ktor:ktor-client-android:2.3.12")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
+    implementation("io.github.jan-tennert.supabase:supabase-kt:3.2.0")
+    implementation("io.github.jan-tennert.supabase:auth-kt:3.2.0")
+    implementation("io.github.jan-tennert.supabase:postgrest-kt:3.2.0")
+    implementation("io.github.jan-tennert.supabase:realtime-kt:3.2.0")
+    implementation("io.github.jan-tennert.supabase:storage-kt:3.2.0")
+    implementation("io.ktor:ktor-client-android:3.0.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.7.0")

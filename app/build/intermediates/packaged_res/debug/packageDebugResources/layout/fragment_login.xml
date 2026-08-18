@@ -1,121 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#f9f9f9"
-    android:padding="24dp">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="SUCS Login"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:textColor="#1a1c1c"
-        android:gravity="center"
-        android:layout_marginTop="48dp"
-        android:layout_marginBottom="24dp"/>
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center_horizontal">
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:layout_marginBottom="16dp"
-            app:cardBackgroundColor="#ff5722"
-            app:cardCornerRadius="18dp">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@android:drawable/ic_lock_power_off"
-                android:scaleType="centerInside"
-                android:tint="#ffffff" />
-        </com.google.android.material.card.MaterialCardView>
+        android:padding="24dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Welcome back"
-            android:textSize="28sp"
+            android:text="PowerFix"
+            android:textSize="30sp"
             android:textStyle="bold"
-            android:textColor="#1a1c1c"
-            android:gravity="center"/>
+            android:textColor="#FF5722"
+            android:gravity="center"
+            android:layout_marginTop="28dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Secure access to Utility Control System"
-            android:textSize="16sp"
+            android:text="Smart Electricity Complaint &amp; Tracking"
+            android:textSize="13sp"
             android:textColor="#5b4039"
             android:gravity="center"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginBottom="24dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#FF5722"
+                app:cardCornerRadius="18dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@android:drawable/ic_lock_power_off"
+                    android:scaleType="centerInside"
+                    android:tint="#ffffff"
+                    android:contentDescription="@null" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Welcome Back"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:textColor="#1a1c1c"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sign in to your PowerFix account"
+                android:textSize="15sp"
+                android:textColor="#5b4039"
+                android:gravity="center"
+                android:layout_marginTop="6dp"/>
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:hint="Email Address"
+            android:labelFor="@id/emailInput"
+            app:startIconDrawable="@android:drawable/sym_action_email"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Password"
+            android:labelFor="@id/passwordInput"
+            app:startIconDrawable="@android:drawable/ic_lock_lock"
+            app:endIconMode="password_toggle"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Role"
+            android:textColor="#5b4039"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="6dp" />
+
+        <Spinner
+            android:id="@+id/roleSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="#f3f3f3" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tnebIdInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="TNEB Customer ID"
+            android:labelFor="@id/tnebIdInput"
+            app:startIconDrawable="@android:drawable/ic_menu_info_details"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tnebIdInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp">
+
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Sign In"
+                android:textAllCaps="false"
+                android:backgroundTint="#FF5722"
+                android:textColor="#ffffff"
+                android:textSize="18sp"/>
+
+            <ProgressBar
+                android:id="@+id/loginProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminateTint="#FF5722"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="Need assistance? Contact PowerFix Support"
+            android:textColor="#5b4039"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/registerText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:text="Don't have an account? Register"
+            android:textColor="#FF5722"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:contentDescription="Don't have an account? Register" />
+
     </LinearLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:hint="Email Address"
-        app:startIconDrawable="@android:drawable/sym_action_email"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/emailInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="Password"
-        app:startIconDrawable="@android:drawable/ic_lock_lock"
-        app:endIconMode="password_toggle"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/passwordInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:id="@+id/loginButton"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginTop="28dp"
-        android:text="Login"
-        android:textAllCaps="false"
-        android:backgroundTint="#ff5722"
-        android:textColor="#ffffff"
-        android:textSize="18sp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:text="Need technical assistance? Contact Support"
-        android:textColor="#5b4039"
-        android:gravity="center" />
-
-    <TextView
-        android:id="@+id/registerText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="Don't have an account? Register"
-        android:textColor="#b02f00"
-        android:textStyle="bold"
-        android:gravity="center"/>
-
-</LinearLayout>
+</ScrollView>

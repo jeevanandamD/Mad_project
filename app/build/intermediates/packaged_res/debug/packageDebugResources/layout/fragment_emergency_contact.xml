@@ -33,13 +33,26 @@
         android:padding="12dp"
         android:layout_marginBottom="20dp"/>
 
-    <Button
-        android:id="@+id/sendRequestButton"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:text="Send Request"
-        android:textAllCaps="false"
-        android:backgroundTint="#b02f00"
-        android:textColor="#ffffff"/>
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/sendRequestButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Send Request"
+            android:textAllCaps="false"
+            android:backgroundTint="#b02f00"
+            android:textColor="#ffffff"/>
+
+        <ProgressBar
+            android:id="@+id/sendProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="#b02f00"
+            android:visibility="gone" />
+    </FrameLayout>
 
 </LinearLayout>
