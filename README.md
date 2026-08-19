@@ -4,7 +4,7 @@ PowerFix is a role-based electricity breakdown reporting, field technician dispa
 
 ---
 
-## ⚡ What is PowerFix?
+##  What is PowerFix?
 
 PowerFix provides dedicated workflows for three key user roles:
 1. **Customer**: Report power outages, meter faults, voltage surges, and sparks; track assigned field technicians in real-time.
@@ -13,7 +13,7 @@ PowerFix provides dedicated workflows for three key user roles:
 
 ---
 
-## 🏗️ Architecture & Tech Stack
+##  Architecture & Tech Stack
 
 - **Platform**: Android Native (Kotlin 2.1.21, minSdk 30, targetSdk 34)
 - **UI Framework**: Android Views + Material Components (Material 3), ViewBinding
@@ -23,7 +23,7 @@ PowerFix provides dedicated workflows for three key user roles:
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 app/src/main/java/com/example/powerfix/
@@ -62,7 +62,7 @@ app/src/main/java/com/example/powerfix/
 
 ---
 
-## 🔄 Backward Compatibility (from "sucs" to "power-fix")
+##  Backward Compatibility (from "sucs" to "power-fix")
 
 The project has been migrated from the legacy name `"sucs"` to `"power-fix"` with zero disruption to user sessions:
 
@@ -72,7 +72,7 @@ The project has been migrated from the legacy name `"sucs"` to `"power-fix"` wit
 
 ---
 
-## ✨ Key Features
+##  Key Features
 
 1. **Smart Electricity Complaint Presets**: Specialized electrical fault categories.
 2. **Live ETA & Dispatch Estimation Engine**: Dynamic calculation of technician response times.
@@ -82,7 +82,7 @@ The project has been migrated from the legacy name `"sucs"` to `"power-fix"` wit
 
 ---
 
-## 🛠️ Database Setup (Firebase)
+##  Database Setup (Firebase)
 
 See [FIREBASE_CONFIG_GUIDE.md](FIREBASE_CONFIG_GUIDE.md) for detailed setup instructions including:
 - Firestore Collections (`profiles`, `complaints`, `emergency_requests`, `tneb_ids`)
@@ -91,7 +91,7 @@ See [FIREBASE_CONFIG_GUIDE.md](FIREBASE_CONFIG_GUIDE.md) for detailed setup inst
 
 ---
 
-## 🚀 Build and Run
+##  Build and Run
 
 1. Place your `google-services.json` in the `app/` directory.
 2. Clean and assemble debug APK:
