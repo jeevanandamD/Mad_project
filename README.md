@@ -28,23 +28,26 @@ PowerFix provides dedicated workflows for three key user roles:
 ```
 app/src/main/java/com/example/powerfix/
 ├── MainActivity.kt                      # Main router based on authenticated user role
-├── PowerFixApplication.kt               # Application entry point & Supabase client container
+├── PowerFixApplication.kt               # Application entry point & Firebase initialization
 ├── data/
-│   ├── Complaint.kt                     # Complaint work-order model with ETA computation
+│   ├── AuthRepository.kt                # Firebase Auth & Profile logic
+│   ├── ComplaintRepository.kt           # Firestore Complaint management
+│   ├── EmergencyRepository.kt           # Firestore SOS hazard tracking
+│   ├── Complaint.kt                     # Complaint model with ETA computation (Firestore mapping)
 │   ├── UserProfile.kt                   # User entity (Customer, Worker, Admin)
 │   ├── EmergencyRequest.kt              # Emergency SOS hazard request model
-│   └── PowerFixPrefs.kt                 # Centralized preferences with automatic SUCS legacy migration
+│   └── PowerFixPrefs.kt                 # Centralized preferences with legacy SUCS migration
 └── ui/
     ├── admin/
     │   ├── AdminDashboardFragment.kt    # Dispatcher console
-    │   ├── ComplaintsListFragment.kt    # Complaint assignment & admin reply dialog
-    │   └── EmergencyRequestsFragment.kt # Hazard SOS management dialog
+    │   ├── ComplaintsListFragment.kt    # Complaint assignment & admin reply
+    │   └── EmergencyRequestsFragment.kt # Hazard SOS management
     ├── auth/
     │   ├── LoginFragment.kt             # Unified role-aware authentication
-    │   └── RegisterFragment.kt          # Customer self-registration (server-side role guard)
+    │   └── RegisterFragment.kt          # Customer & Worker self-registration
     ├── common/
     │   ├── AuthUtil.kt                  # Secure sign-out and session clearance
-    │   ├── ComplaintAdapter.kt          # RecyclerView adapter with priority/status badges & replies
+    │   ├── ComplaintAdapter.kt          # RecyclerView adapter for complaints
     │   └── EmergencyRequestAdapter.kt   # SOS request adapter
     ├── customer/
     │   ├── CustomerDashboardFragment.kt # Customer quick actions
@@ -54,60 +57,49 @@ app/src/main/java/com/example/powerfix/
     └── worker/
         ├── WorkerDashboardFragment.kt   # Technician workbench
         ├── WorkerAvailabilityFragment.kt# Live availability status toggle (Active/Inactive)
-        └── WorkerTasksFragment.kt       # Assigned work orders & task progress dialog
+        └── WorkerTasksFragment.kt       # Assigned work orders & task progress
 ```
 
 ---
 
-## 🔄 Project Rename & Backward Compatibility (from "sucs" to "power-fix")
+## 🔄 Backward Compatibility (from "sucs" to "power-fix")
 
-The project has been migrated from the legacy name `"sucs"` to `"power-fix"` with zero disruption to existing databases or user sessions:
+The project has been migrated from the legacy name `"sucs"` to `"power-fix"` with zero disruption to user sessions:
 
 1. **Package & Namespace**: Renamed to `com.example.powerfix`.
-2. **Preferences Migration (`PowerFixPrefs`)**: Automatically detects existing `sucs_prefs` and migrates cached credentials and worker availability into `powerfix_prefs` while maintaining dual-write support.
-3. **Application Alias**: `typealias SucsApplication = PowerFixApplication` preserved for any legacy reflective/manifest references.
-4. **Theme Aliases**: `Theme.SUCS` is preserved as a style alias pointing to `Theme.PowerFix`.
-5. **Database Interoperability**: Preserves all existing table structures (`profiles`, `complaints`, `emergency_requests`) with enhanced column definitions and triggers.
+2. **Preferences Migration (`PowerFixPrefs`)**: Automatically detects existing `sucs_prefs` and migrates cached credentials into `powerfix_prefs`.
+3. **Database Migration**: All logic has been ported from Supabase to **Firebase Firestore**.
 
 ---
 
-## ✨ Newly Added Features (Not in Legacy SUCS)
+## ✨ Key Features
 
-1. **Smart Electricity Complaint Presets**: Specialized electrical fault categories (Blackouts, Transformer Explosions, Voltage Surges, Sparks/Hazards, Meter Faults, Wire Snapping).
-2. **Live ETA & Dispatch Estimation Engine**: Dynamic calculation of technician response times based on priority (`Urgent`, `High`, `Medium`, `Low`) and resolution progress.
-3. **Interactive Worker Dispatch Dialog**: Administrators can view real-time worker availability (`Available` vs `Busy`) directly when assigning tickets.
-4. **Realtime Technician Task Progress**: Workers can update task progress (`Assigned` → `In Progress` → `Resolved`) with status badges.
-5. **Automatic Profile Pre-population**: Customer registration and complaint forms automatically pre-fill user name, mobile number, and address from their account.
+1. **Smart Electricity Complaint Presets**: Specialized electrical fault categories.
+2. **Live ETA & Dispatch Estimation Engine**: Dynamic calculation of technician response times.
+3. **Interactive Worker Dispatch Dialog**: Real-time worker availability visualization.
+4. **Realtime Technician Task Progress**: Workers update task status with live listener feedback.
+5. **Role-Based Navigation**: One-way navigation flow ensuring secure access to dashboards.
 
 ---
 
 ## 🛠️ Database Setup (Firebase)
 
-1. **Firestore Collections**:
-   - `profiles`: Stores user data. Document ID is the Firebase Auth UID.
-   - `complaints`: Stores electricity complaints.
-   - `emergency_requests`: Stores SOS hazard alerts.
-   - `tneb_ids`: Stores valid TNEB IDs for verification.
-
-2. **TNEB Verification Setup**:
-   Create a document in `tneb_ids` for every valid ID:
-   - **Document ID**: `22556469956`
-   - **Fields**:
-     - `role`: "customer"
-     - `is_registered`: false
-
-3. **Security Rules**:
-   Ensure you set up Firestore Security Rules to protect your data based on user roles.
+See [FIREBASE_CONFIG_GUIDE.md](FIREBASE_CONFIG_GUIDE.md) for detailed setup instructions including:
+- Firestore Collections (`profiles`, `complaints`, `emergency_requests`, `tneb_ids`)
+- Security Rules (Role-based access control)
+- Authentication settings
 
 ---
 
 ## 🚀 Build and Run
 
-```bash
-# Clean and assemble debug APK
-./gradlew.bat assembleDebug
-
-# Install on connected Android device/emulator
-adb install -r app/build/outputs/apk/debug/app-debug.apk
-adb shell am start -n com.example.powerfix/.MainActivity
-```
+1. Place your `google-services.json` in the `app/` directory.
+2. Clean and assemble debug APK:
+   ```bash
+   ./gradlew.bat assembleDebug
+   ```
+3. Install and run:
+   ```bash
+   adb install -r app/build/outputs/apk/debug/app-debug.apk
+   adb shell am start -n com.example.powerfix/.MainActivity
+   ```
