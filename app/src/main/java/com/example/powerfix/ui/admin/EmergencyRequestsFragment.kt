@@ -16,22 +16,13 @@ import com.example.powerfix.data.EmergencyRequest
 import com.example.powerfix.databinding.DialogEmergencyActionBinding
 import com.example.powerfix.databinding.FragmentEmergencyRequestsBinding
 import com.example.powerfix.ui.common.EmergencyRequestAdapter
-import io.github.jan.supabase.postgrest.postgrest
-import io.github.jan.supabase.postgrest.query.Order
-import io.github.jan.supabase.realtime.PostgresAction
-import io.github.jan.supabase.realtime.RealtimeChannel
-import io.github.jan.supabase.realtime.channel
-import io.github.jan.supabase.realtime.postgresChangeFlow
-import io.github.jan.supabase.realtime.realtime
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class EmergencyRequestsFragment : Fragment(R.layout.fragment_emergency_requests) {
     private var _binding: FragmentEmergencyRequestsBinding? = null
     private val binding get() = _binding!!
-    private val supabase = AppContainer.supabase
-    private var channel: RealtimeChannel? = null
+    private val emergencyRepository get() = AppContainer.emergencyRepository
     private lateinit var adapter: EmergencyRequestAdapter
 
     override fun onCreateView(
@@ -54,35 +45,20 @@ class EmergencyRequestsFragment : Fragment(R.layout.fragment_emergency_requests)
         binding.requestsRecycler.adapter = adapter
         binding.listProgress.visibility = View.VISIBLE
 
-        loadEmergencyRequests()
-
-        // Realtime subscription for instant updates
-        val realtimeChannel = supabase.realtime.channel("public:emergency_requests")
-        channel = realtimeChannel
-        realtimeChannel.postgresChangeFlow<PostgresAction>(schema = "public") {
-            table = "emergency_requests"
-        }.onEach {
-            loadEmergencyRequests()
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
-        viewLifecycleOwner.lifecycleScope.launch { realtimeChannel.subscribe() }
+        observeEmergencyRequests()
     }
 
-    private fun loadEmergencyRequests() {
+    private fun observeEmergencyRequests() {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                val docs = supabase.postgrest.from("emergency_requests")
-                    .select {
-                        order("created_at", order = Order.DESCENDING)
-                        limit(50)
-                    }
-                    .decodeList<EmergencyRequest>()
-
-                adapter.submitList(docs)
-                binding.emptyText.visibility = if (docs.isEmpty()) View.VISIBLE else View.GONE
+                emergencyRepository.getEmergencyRequestsFlow().collectLatest { docs ->
+                    adapter.submitList(docs)
+                    binding.emptyText.visibility = if (docs.isEmpty()) View.VISIBLE else View.GONE
+                    binding.listProgress.visibility = View.GONE
+                }
             } catch (_: Exception) {
                 binding.emptyText.text = getString(R.string.load_failed)
                 binding.emptyText.visibility = View.VISIBLE
-            } finally {
                 binding.listProgress.visibility = View.GONE
             }
         }
@@ -117,14 +93,9 @@ class EmergencyRequestsFragment : Fragment(R.layout.fragment_emergency_requests)
 
             viewLifecycleOwner.lifecycleScope.launch {
                 try {
-                    supabase.postgrest.from("emergency_requests").update(
-                        mapOf("status" to selectedStatus)
-                    ) {
-                        filter { eq("id", request.id) }
-                    }
+                    emergencyRepository.updateEmergencyStatus(request.id, selectedStatus)
                     Toast.makeText(requireContext(), "Status updated to $selectedStatus", Toast.LENGTH_SHORT).show()
                     dialog.dismiss()
-                    loadEmergencyRequests()
                 } catch (e: Exception) {
                     Toast.makeText(requireContext(), e.localizedMessage ?: "Update failed", Toast.LENGTH_SHORT).show()
                 } finally {
@@ -138,11 +109,6 @@ class EmergencyRequestsFragment : Fragment(R.layout.fragment_emergency_requests)
     }
 
     override fun onDestroyView() {
-        val c = channel
-        if (c != null) {
-            viewLifecycleOwner.lifecycleScope.launch { c.unsubscribe() }
-        }
-        channel = null
         super.onDestroyView()
         _binding = null
     }

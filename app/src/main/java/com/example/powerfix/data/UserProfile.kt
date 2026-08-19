@@ -1,20 +1,21 @@
 package com.example.powerfix.data
 
+import com.google.firebase.firestore.PropertyName
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class UserProfile(
-    val uid: String = "",
-    val email: String = "",
-    val name: String = "",
-    val role: String = "customer",
-    val phone: String = "",
-    val address: String = "",
-    @SerialName("tneb_id") val tnebId: String = "",
-    val available: Boolean = true,
-    val location: String = "",
-    @SerialName("created_at") val createdAt: String? = null,
-    @SerialName("updated_at") val updatedAt: String? = null,
-    val disabled: Boolean = false
+    var uid: String = "",
+    var email: String = "",
+    var name: String = "",
+    var role: String = "customer",
+    var phone: String = "",
+    var address: String = "",
+    @get:PropertyName("tneb_id") @set:PropertyName("tneb_id") @SerialName("tneb_id") var tnebId: String = "",
+    var available: Boolean = true,
+    var location: String = "",
+    @get:PropertyName("created_at") @set:PropertyName("created_at") @SerialName("created_at") var createdAt: String? = null,
+    @get:PropertyName("updated_at") @set:PropertyName("updated_at") @SerialName("updated_at") var updatedAt: String? = null,
+    var disabled: Boolean = false
 )

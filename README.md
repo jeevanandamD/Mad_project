@@ -17,9 +17,9 @@ PowerFix provides dedicated workflows for three key user roles:
 
 - **Platform**: Android Native (Kotlin 2.1.21, minSdk 30, targetSdk 34)
 - **UI Framework**: Android Views + Material Components (Material 3), ViewBinding
-- **Backend & Database**: **Supabase** via `supabase-kt` 3.2.0 (GoTrue Auth, PostgREST, Realtime, Storage)
-- **Serialization**: `kotlinx.serialization` with ISO-8601 timestamps
-- **Networking**: `ktor-client-android` 3.0.3 engine + Coroutines Lifecycle
+- **Backend & Database**: **Firebase** (Auth, Cloud Firestore, Storage)
+- **Serialization**: `kotlinx.serialization` (for local prefs) + Firebase Firestore Mapper
+- **Networking**: Firebase SDK + `ktor-client-android` (for auxiliary APIs)
 
 ---
 
@@ -81,18 +81,23 @@ The project has been migrated from the legacy name `"sucs"` to `"power-fix"` wit
 
 ---
 
-## 🛠️ Database Setup (Supabase)
+## 🛠️ Database Setup (Firebase)
 
-Run the SQL migration script located at [`supabase/migrations/20260816_powerfix_upgrade.sql`](supabase/migrations/20260816_powerfix_upgrade.sql) in your **Supabase Dashboard > SQL Editor**.
+1. **Firestore Collections**:
+   - `profiles`: Stores user data. Document ID is the Firebase Auth UID.
+   - `complaints`: Stores electricity complaints.
+   - `emergency_requests`: Stores SOS hazard alerts.
+   - `tneb_ids`: Stores valid TNEB IDs for verification.
 
-### Role Promotion Queries
-```sql
--- Promote user to Administrator
-UPDATE public.profiles SET role = 'admin' WHERE email = 'admin@example.com';
+2. **TNEB Verification Setup**:
+   Create a document in `tneb_ids` for every valid ID:
+   - **Document ID**: `22556469956`
+   - **Fields**:
+     - `role`: "customer"
+     - `is_registered`: false
 
--- Promote user to Field Worker (Active)
-UPDATE public.profiles SET role = 'worker', available = true WHERE email = 'worker@example.com';
-```
+3. **Security Rules**:
+   Ensure you set up Firestore Security Rules to protect your data based on user roles.
 
 ---
 

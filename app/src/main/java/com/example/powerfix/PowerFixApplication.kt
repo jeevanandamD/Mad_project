@@ -3,38 +3,30 @@ package com.example.powerfix
 import android.app.Application
 import android.content.Context
 import com.example.powerfix.data.AuthRepository
-import io.github.jan.supabase.createSupabaseClient
-import io.github.jan.supabase.auth.Auth
-import io.github.jan.supabase.postgrest.Postgrest
-import io.github.jan.supabase.realtime.Realtime
-import io.github.jan.supabase.storage.Storage
+import com.example.powerfix.data.ComplaintRepository
+import com.example.powerfix.data.EmergencyRepository
+import com.google.firebase.FirebaseApp
 
 class PowerFixApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        val supabase = createSupabaseClient(
-            supabaseUrl = BuildConfig.SUPABASE_URL,
-            supabaseKey = BuildConfig.SUPABASE_ANON_KEY
-        ) {
-            install(Auth)
-            install(Postgrest)
-            install(Realtime)
-            install(Storage)
-        }
-        AppContainer.initialize(applicationContext, supabase)
+        FirebaseApp.initializeApp(this)
+        AppContainer.initialize(applicationContext)
     }
 }
 
 object AppContainer {
-    lateinit var supabase: io.github.jan.supabase.SupabaseClient
-        private set
-
     lateinit var authRepository: AuthRepository
         private set
+    lateinit var complaintRepository: ComplaintRepository
+        private set
+    lateinit var emergencyRepository: EmergencyRepository
+        private set
 
-    fun initialize(context: Context, supabase: io.github.jan.supabase.SupabaseClient) {
-        this.supabase = supabase
+    fun initialize(context: Context) {
         this.authRepository = AuthRepository(context)
+        this.complaintRepository = ComplaintRepository()
+        this.emergencyRepository = EmergencyRepository()
     }
 }
 

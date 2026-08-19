@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
     kotlin("plugin.serialization") version "2.1.21"
 }
 
@@ -58,11 +59,12 @@ android {
 }
 
 dependencies {
-    implementation("io.github.jan-tennert.supabase:supabase-kt:3.2.0")
-    implementation("io.github.jan-tennert.supabase:auth-kt:3.2.0")
-    implementation("io.github.jan-tennert.supabase:postgrest-kt:3.2.0")
-    implementation("io.github.jan-tennert.supabase:realtime-kt:3.2.0")
-    implementation("io.github.jan-tennert.supabase:storage-kt:3.2.0")
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-storage-ktx")
+
     implementation("io.ktor:ktor-client-android:3.0.3")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 

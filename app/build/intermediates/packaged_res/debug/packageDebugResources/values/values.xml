@@ -49,8 +49,14 @@
     <string name="app_name">PowerFix</string>
     <string name="app_name_legacy">SUCS</string>
     <string name="app_tagline">Smart Electricity Complaint &amp; Worker Tracking System</string>
+    <string name="gcm_defaultSenderId" translatable="false">65194461977</string>
+    <string name="google_api_key" translatable="false">AIzaSyAiTlz6nUK7GJobal35T_iC8fg5AjbccUk</string>
+    <string name="google_app_id" translatable="false">1:65194461977:android:790a9ca8966fd7bcf75388</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAiTlz6nUK7GJobal35T_iC8fg5AjbccUk</string>
+    <string name="google_storage_bucket" translatable="false">power-fix-37bfc.firebasestorage.app</string>
     <string name="load_failed">Failed to load. Pull back and try again.</string>
     <string name="not_signed_in">You are not signed in. Please log in.</string>
+    <string name="project_id" translatable="false">power-fix-37bfc</string>
     <style name="Theme.PowerFix" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">#FF5722</item>
         <item name="colorPrimaryVariant">#E64A19</item>

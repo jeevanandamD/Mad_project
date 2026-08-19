@@ -10,30 +10,20 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import io.github.jan.supabase.auth.auth
-import io.github.jan.supabase.postgrest.postgrest
-import io.github.jan.supabase.postgrest.query.Order
-import io.github.jan.supabase.realtime.PostgresAction
-import io.github.jan.supabase.realtime.RealtimeChannel
-import io.github.jan.supabase.realtime.channel
-import io.github.jan.supabase.realtime.postgresChangeFlow
-import io.github.jan.supabase.realtime.realtime
 import com.example.powerfix.AppContainer
 import com.example.powerfix.R
 import com.example.powerfix.data.Complaint
 import com.example.powerfix.databinding.DialogWorkerTaskActionBinding
 import com.example.powerfix.databinding.FragmentWorkerTasksBinding
 import com.example.powerfix.ui.common.ComplaintAdapter
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.time.Instant
 
 class WorkerTasksFragment : Fragment(R.layout.fragment_worker_tasks) {
     private var _binding: FragmentWorkerTasksBinding? = null
     private val binding get() = _binding!!
-    private val supabase = AppContainer.supabase
-    private var channel: RealtimeChannel? = null
+    private val complaintRepository get() = AppContainer.complaintRepository
     private lateinit var adapter: ComplaintAdapter
 
     override fun onCreateView(
@@ -57,21 +47,11 @@ class WorkerTasksFragment : Fragment(R.layout.fragment_worker_tasks) {
         binding.listProgress.visibility = View.VISIBLE
 
         loadTasks()
-
-        // Realtime updates for assigned complaints
-        val realtimeChannel = supabase.realtime.channel("public:worker_complaints")
-        channel = realtimeChannel
-        realtimeChannel.postgresChangeFlow<PostgresAction>(schema = "public") {
-            table = "complaints"
-        }.onEach {
-            loadTasks()
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
-        viewLifecycleOwner.lifecycleScope.launch { realtimeChannel.subscribe() }
     }
 
     private fun loadTasks() {
-        val uid = supabase.auth.currentUserOrNull()?.id
-        if (uid == null) {
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user == null) {
             binding.listProgress.visibility = View.GONE
             binding.emptyText.text = getString(R.string.not_signed_in)
             binding.emptyText.visibility = View.VISIBLE
@@ -80,20 +60,16 @@ class WorkerTasksFragment : Fragment(R.layout.fragment_worker_tasks) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                val items = supabase.postgrest.from("complaints")
-                    .select {
-                        filter { eq("assigned_worker_id", uid) }
-                        order("created_at", order = Order.DESCENDING)
-                        limit(50)
-                    }
-                    .decodeList<Complaint>()
-
-                adapter.submitList(items)
-                binding.emptyText.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
+                // For simplicity, we filter in the flow or use a custom query
+                complaintRepository.getComplaintsFlow().collectLatest { allItems ->
+                    val workerTasks = allItems.filter { it.assignedWorkerId == user.uid }
+                    adapter.submitList(workerTasks)
+                    binding.emptyText.visibility = if (workerTasks.isEmpty()) View.VISIBLE else View.GONE
+                    binding.listProgress.visibility = View.GONE
+                }
             } catch (_: Exception) {
                 binding.emptyText.text = getString(R.string.load_failed)
                 binding.emptyText.visibility = View.VISIBLE
-            } finally {
                 binding.listProgress.visibility = View.GONE
             }
         }
@@ -139,18 +115,9 @@ class WorkerTasksFragment : Fragment(R.layout.fragment_worker_tasks) {
 
             viewLifecycleOwner.lifecycleScope.launch {
                 try {
-                    supabase.postgrest.from("complaints").update(
-                        mapOf(
-                            "status" to newStatus,
-                            "updated_at" to Instant.now().toString()
-                        )
-                    ) {
-                        filter { eq("id", complaint.id) }
-                    }
-
+                    complaintRepository.updateComplaintStatus(complaint.id, newStatus)
                     Toast.makeText(requireContext(), "Task status updated to $newStatus", Toast.LENGTH_SHORT).show()
                     dialog.dismiss()
-                    loadTasks()
                 } catch (e: Exception) {
                     Toast.makeText(requireContext(), e.localizedMessage ?: "Update failed", Toast.LENGTH_SHORT).show()
                 } finally {
@@ -164,11 +131,6 @@ class WorkerTasksFragment : Fragment(R.layout.fragment_worker_tasks) {
     }
 
     override fun onDestroyView() {
-        val c = channel
-        if (c != null) {
-            viewLifecycleOwner.lifecycleScope.launch { c.unsubscribe() }
-        }
-        channel = null
         super.onDestroyView()
         _binding = null
     }

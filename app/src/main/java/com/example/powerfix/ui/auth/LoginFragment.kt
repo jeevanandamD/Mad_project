@@ -11,8 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.powerfix.AppContainer
 import com.example.powerfix.R
+import com.example.powerfix.data.AuthError
 import com.example.powerfix.data.AuthResult
 import com.example.powerfix.data.AuthRole
+import com.example.powerfix.data.TnebIdValidator
 import com.example.powerfix.data.dashboard
 import com.example.powerfix.databinding.FragmentLoginBinding
 import com.example.powerfix.ui.admin.AdminDashboardFragment
@@ -85,6 +87,15 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         binding.loginProgress.visibility = View.VISIBLE
 
         viewLifecycleOwner.lifecycleScope.launch {
+            // Validate TNEB ID format before attempting login
+            val trimmedTneb = tnebId.trim()
+            if (trimmedTneb.isNotEmpty() && !TnebIdValidator.isValidForRole(role.dbValue, trimmedTneb)) {
+                Toast.makeText(requireContext(), "Invalid TNEB ID format for selected role", Toast.LENGTH_LONG).show()
+                binding.loginButton.isEnabled = true
+                binding.loginProgress.visibility = View.GONE
+                return@launch
+            }
+
             val result = authRepository.login(role, email, password, tnebId)
 
             when (result) {

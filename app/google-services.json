@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "65194461977",
+    "project_id": "power-fix-37bfc",
+    "storage_bucket": "power-fix-37bfc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:65194461977:android:790a9ca8966fd7bcf75388",
+        "android_client_info": {
+          "package_name": "com.example.powerfix"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiTlz6nUK7GJobal35T_iC8fg5AjbccUk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

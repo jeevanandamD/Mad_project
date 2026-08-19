@@ -7,21 +7,21 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import io.github.jan.supabase.auth.auth
-import io.github.jan.supabase.postgrest.postgrest
 import com.example.powerfix.AppContainer
 import com.example.powerfix.R
 import com.example.powerfix.data.Complaint
 import com.example.powerfix.data.UserProfile
 import com.example.powerfix.databinding.FragmentRegisterComplaintBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.time.Instant
-import java.util.UUID
 
 class RegisterComplaintFragment : Fragment(R.layout.fragment_register_complaint) {
     private var _binding: FragmentRegisterComplaintBinding? = null
     private val binding get() = _binding!!
-    private val supabase = AppContainer.supabase
+    private val complaintRepository get() = AppContainer.complaintRepository
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,16 +36,12 @@ class RegisterComplaintFragment : Fragment(R.layout.fragment_register_complaint)
         super.onViewCreated(view, savedInstanceState)
 
         // Preload customer profile info if available
-        val currentUid = supabase.auth.currentUserOrNull()?.id
-        if (currentUid != null) {
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
             viewLifecycleOwner.lifecycleScope.launch {
                 try {
-                    val profile = supabase.postgrest.from("profiles")
-                        .select {
-                            filter { eq("uid", currentUid) }
-                        }
-                        .decodeList<UserProfile>()
-                        .firstOrNull()
+                    val doc = FirebaseFirestore.getInstance().collection("profiles").document(user.uid).get().await()
+                    val profile = doc.toObject(UserProfile::class.java)
 
                     if (profile != null) {
                         if (binding.nameInput.text.isNullOrBlank() && profile.name.isNotBlank()) {
@@ -65,11 +61,10 @@ class RegisterComplaintFragment : Fragment(R.layout.fragment_register_complaint)
         }
 
         binding.submitComplaintButton.setOnClickListener {
-            val userId = supabase.auth.currentUserOrNull()?.id ?: return@setOnClickListener
+            val currentUser = FirebaseAuth.getInstance().currentUser ?: return@setOnClickListener
             val now = Instant.now().toString()
             val complaint = Complaint(
-                id = UUID.randomUUID().toString(),
-                customerId = userId,
+                customerId = currentUser.uid,
                 customerName = binding.nameInput.text?.toString()?.trim().orEmpty(),
                 mobile = binding.mobileInput.text?.toString()?.trim().orEmpty(),
                 address = binding.addressInput.text?.toString()?.trim().orEmpty(),
@@ -92,7 +87,7 @@ class RegisterComplaintFragment : Fragment(R.layout.fragment_register_complaint)
                 binding.submitComplaintButton.isEnabled = false
                 binding.submitProgress.visibility = View.VISIBLE
                 try {
-                    supabase.postgrest.from("complaints").insert(complaint)
+                    complaintRepository.createComplaint(complaint)
                     Toast.makeText(requireContext(), "PowerFix ticket submitted successfully", Toast.LENGTH_SHORT).show()
                     parentFragmentManager.popBackStack()
                 } catch (e: Exception) {

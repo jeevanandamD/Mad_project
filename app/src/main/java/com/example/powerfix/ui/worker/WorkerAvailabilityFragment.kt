@@ -8,19 +8,18 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import io.github.jan.supabase.auth.auth
-import io.github.jan.supabase.postgrest.postgrest
-import com.example.powerfix.AppContainer
 import com.example.powerfix.R
 import com.example.powerfix.data.PowerFixPrefs
 import com.example.powerfix.data.UserProfile
 import com.example.powerfix.databinding.FragmentWorkerAvailabilityBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class WorkerAvailabilityFragment : Fragment(R.layout.fragment_worker_availability) {
     private var _binding: FragmentWorkerAvailabilityBinding? = null
     private val binding get() = _binding!!
-    private val supabase = AppContainer.supabase
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,19 +40,15 @@ class WorkerAvailabilityFragment : Fragment(R.layout.fragment_worker_availabilit
     }
 
     private fun loadCurrentAvailability() {
-        val uid = supabase.auth.currentUserOrNull()?.id ?: return
+        val user = FirebaseAuth.getInstance().currentUser ?: return
         val cachedAvailable = PowerFixPrefs.isWorkerAvailable(requireActivity())
         updateStatusDisplay(cachedAvailable)
 
         binding.availabilityProgress.visibility = View.VISIBLE
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                val profile = supabase.postgrest.from("profiles")
-                    .select {
-                        filter { eq("uid", uid) }
-                    }
-                    .decodeList<UserProfile>()
-                    .firstOrNull()
+                val doc = FirebaseFirestore.getInstance().collection("profiles").document(user.uid).get().await()
+                val profile = doc.toObject(UserProfile::class.java)
 
                 val isAvailable = profile?.available ?: cachedAvailable
                 PowerFixPrefs.setWorkerAvailable(requireActivity(), isAvailable)
@@ -79,8 +74,8 @@ class WorkerAvailabilityFragment : Fragment(R.layout.fragment_worker_availabilit
     }
 
     private fun setAvailability(available: Boolean) {
-        val uid = supabase.auth.currentUserOrNull()?.id
-        if (uid == null) {
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user == null) {
             Toast.makeText(requireContext(), "User not logged in", Toast.LENGTH_SHORT).show()
             return
         }
@@ -91,9 +86,10 @@ class WorkerAvailabilityFragment : Fragment(R.layout.fragment_worker_availabilit
 
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                supabase.postgrest.from("profiles").update(mapOf("available" to available)) {
-                    filter { eq("uid", uid) }
-                }
+                FirebaseFirestore.getInstance().collection("profiles")
+                    .document(user.uid)
+                    .update("available", available)
+                    .await()
 
                 PowerFixPrefs.setWorkerAvailable(requireActivity(), available)
                 updateStatusDisplay(available)

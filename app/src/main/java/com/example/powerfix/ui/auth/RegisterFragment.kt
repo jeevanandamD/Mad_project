@@ -151,6 +151,30 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             return
         }
 
+        if (!password.contains(Regex(".*[A-Z].*"))) {
+            Toast.makeText(requireContext(), "Password must contain at least one uppercase letter", Toast.LENGTH_SHORT).show()
+            binding.passwordInput.error = "Must contain uppercase"
+            return
+        }
+
+        if (!password.contains(Regex(".*[a-z].*"))) {
+            Toast.makeText(requireContext(), "Password must contain at least one lowercase letter", Toast.LENGTH_SHORT).show()
+            binding.passwordInput.error = "Must contain lowercase"
+            return
+        }
+
+        if (!password.contains(Regex(".*[0-9].*"))) {
+            Toast.makeText(requireContext(), "Password must contain at least one number", Toast.LENGTH_SHORT).show()
+            binding.passwordInput.error = "Must contain number"
+            return
+        }
+
+        if (!password.contains(Regex(".*[!@#$%^&*].*"))) {
+            Toast.makeText(requireContext(), "Password must contain at least one special character (!@#$%^&*)", Toast.LENGTH_SHORT).show()
+            binding.passwordInput.error = "Must contain special char"
+            return
+        }
+
         if (verifiedTnebId != tnebId) {
             val hint = if (role == AuthRole.WORKER) "TNEB Worker ID" else "TNEB Customer ID"
             Toast.makeText(requireContext(), "Please verify your $hint before registering.", Toast.LENGTH_LONG).show()
@@ -194,7 +218,8 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                 }
                 is AuthResult.NeedsEmailConfirmation -> {
                     Toast.makeText(requireContext(), result.message, Toast.LENGTH_LONG).show()
-                    parentFragmentManager.popBackStack()
+                    // Navigate to email confirmation screen - user must confirm before proceeding
+                    navigateToEmailConfirmation()
                 }
                 is AuthResult.Failure -> {
                     Toast.makeText(requireContext(), result.message, Toast.LENGTH_LONG).show()
@@ -219,6 +244,17 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         parentFragmentManager.popBackStack(null, androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
             .replace(R.id.nav_host_fragment, role.dashboard())
+            .commit()
+    }
+
+    private fun navigateToEmailConfirmation() {
+        // Show message and return to login screen - user must check email
+        Toast.makeText(requireContext(), "Registration complete! Check your email to confirm, then log in.", Toast.LENGTH_LONG).show()
+        // Navigate back to login to allow email confirmation
+        val loginFragment = LoginFragment()
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.nav_host_fragment, loginFragment)
+            .addToBackStack(null)
             .commit()
     }
 

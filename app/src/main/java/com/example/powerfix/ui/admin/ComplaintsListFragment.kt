@@ -18,23 +18,16 @@ import com.example.powerfix.data.UserProfile
 import com.example.powerfix.databinding.DialogAdminComplaintActionBinding
 import com.example.powerfix.databinding.FragmentComplaintsListBinding
 import com.example.powerfix.ui.common.ComplaintAdapter
-import io.github.jan.supabase.postgrest.postgrest
-import io.github.jan.supabase.postgrest.query.Order
-import io.github.jan.supabase.realtime.PostgresAction
-import io.github.jan.supabase.realtime.RealtimeChannel
-import io.github.jan.supabase.realtime.channel
-import io.github.jan.supabase.realtime.postgresChangeFlow
-import io.github.jan.supabase.realtime.realtime
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.time.Instant
 
 class ComplaintsListFragment : Fragment(R.layout.fragment_complaints_list) {
     private var _binding: FragmentComplaintsListBinding? = null
     private val binding get() = _binding!!
-    private val supabase = AppContainer.supabase
-    private var channel: RealtimeChannel? = null
+    private val complaintRepository get() = AppContainer.complaintRepository
     private lateinit var adapter: ComplaintAdapter
 
     override fun onCreateView(
@@ -57,35 +50,20 @@ class ComplaintsListFragment : Fragment(R.layout.fragment_complaints_list) {
         binding.complaintsRecycler.adapter = adapter
         binding.listProgress.visibility = View.VISIBLE
 
-        loadComplaints()
-
-        // Live updates: reload when a complaint row changes.
-        val realtimeChannel = supabase.realtime.channel("public:complaints")
-        channel = realtimeChannel
-        realtimeChannel.postgresChangeFlow<PostgresAction>(schema = "public") {
-            table = "complaints"
-        }.onEach {
-            loadComplaints()
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
-        viewLifecycleOwner.lifecycleScope.launch { realtimeChannel.subscribe() }
+        observeComplaints()
     }
 
-    private fun loadComplaints() {
+    private fun observeComplaints() {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                val items = supabase.postgrest.from("complaints")
-                    .select {
-                        order("created_at", order = Order.DESCENDING)
-                        limit(100)
-                    }
-                    .decodeList<Complaint>()
-
-                adapter.submitList(items)
-                binding.emptyText.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
+                complaintRepository.getComplaintsFlow().collectLatest { items ->
+                    adapter.submitList(items)
+                    binding.emptyText.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
+                    binding.listProgress.visibility = View.GONE
+                }
             } catch (_: Exception) {
                 binding.emptyText.text = getString(R.string.load_failed)
                 binding.emptyText.visibility = View.VISIBLE
-            } finally {
                 binding.listProgress.visibility = View.GONE
             }
         }
@@ -120,11 +98,11 @@ class ComplaintsListFragment : Fragment(R.layout.fragment_complaints_list) {
         // Fetch workers list from profiles
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                val workers = supabase.postgrest.from("profiles")
-                    .select {
-                        filter { eq("role", "worker") }
-                    }
-                    .decodeList<UserProfile>()
+                val workersSnapshot = FirebaseFirestore.getInstance().collection("profiles")
+                    .whereEqualTo("role", "worker")
+                    .get().await()
+                
+                val workers = workersSnapshot.toObjects(UserProfile::class.java)
 
                 val workerDisplayList = mutableListOf("-- Unassigned --")
                 val workerUidList = mutableListOf<String?>(null)
@@ -171,24 +149,18 @@ class ComplaintsListFragment : Fragment(R.layout.fragment_complaints_list) {
 
                     viewLifecycleOwner.lifecycleScope.launch {
                         try {
+                            val db = FirebaseFirestore.getInstance()
                             val updateData = mutableMapOf<String, Any?>(
                                 "status" to selectedStatus,
                                 "admin_reply" to adminReplyText,
                                 "updated_at" to Instant.now().toString()
                             )
-                            if (selectedWorkerId != null) {
-                                updateData["assigned_worker_id"] = selectedWorkerId
-                            } else {
-                                updateData["assigned_worker_id"] = null
-                            }
+                            updateData["assigned_worker_id"] = selectedWorkerId
 
-                            supabase.postgrest.from("complaints").update(updateData) {
-                                filter { eq("id", complaint.id) }
-                            }
+                            db.collection("complaints").document(complaint.id).update(updateData).await()
 
                             Toast.makeText(requireContext(), "PowerFix ticket updated successfully", Toast.LENGTH_SHORT).show()
                             dialog.dismiss()
-                            loadComplaints()
                         } catch (e: Exception) {
                             Toast.makeText(requireContext(), e.localizedMessage ?: "Update failed", Toast.LENGTH_SHORT).show()
                         } finally {
@@ -210,11 +182,6 @@ class ComplaintsListFragment : Fragment(R.layout.fragment_complaints_list) {
     }
 
     override fun onDestroyView() {
-        val c = channel
-        if (c != null) {
-            viewLifecycleOwner.lifecycleScope.launch { c.unsubscribe() }
-        }
-        channel = null
         super.onDestroyView()
         _binding = null
     }

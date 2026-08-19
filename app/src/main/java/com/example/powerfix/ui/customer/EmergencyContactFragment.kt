@@ -7,18 +7,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import io.github.jan.supabase.auth.auth
-import io.github.jan.supabase.postgrest.postgrest
 import com.example.powerfix.AppContainer
 import com.example.powerfix.R
+import com.example.powerfix.data.EmergencyRequest
 import com.example.powerfix.databinding.FragmentEmergencyContactBinding
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import java.time.Instant
 
 class EmergencyContactFragment : Fragment(R.layout.fragment_emergency_contact) {
     private var _binding: FragmentEmergencyContactBinding? = null
     private val binding get() = _binding!!
-    private val supabase = AppContainer.supabase
+    private val emergencyRepository get() = AppContainer.emergencyRepository
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,19 +38,19 @@ class EmergencyContactFragment : Fragment(R.layout.fragment_emergency_contact) {
                 return@setOnClickListener
             }
 
-            val uid = supabase.auth.currentUserOrNull()?.id ?: ""
-            val request = mapOf(
-                "user_id" to uid,
-                "message" to message,
-                "status" to "Open",
-                "created_at" to Instant.now().toString()
+            val user = FirebaseAuth.getInstance().currentUser
+            val request = EmergencyRequest(
+                userId = user?.uid ?: "anonymous",
+                message = message,
+                status = "Open",
+                createdAt = Instant.now().toString()
             )
 
             viewLifecycleOwner.lifecycleScope.launch {
                 binding.sendRequestButton.isEnabled = false
                 binding.sendProgress.visibility = View.VISIBLE
                 try {
-                    supabase.postgrest.from("emergency_requests").insert(request)
+                    emergencyRepository.createEmergencyRequest(request)
                     Toast.makeText(requireContext(), "Emergency SOS request sent", Toast.LENGTH_SHORT).show()
                     binding.messageInput.setText("")
                 } catch (e: Exception) {

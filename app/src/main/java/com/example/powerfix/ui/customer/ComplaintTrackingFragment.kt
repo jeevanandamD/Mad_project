@@ -9,29 +9,20 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import io.github.jan.supabase.auth.auth
-import io.github.jan.supabase.postgrest.postgrest
-import io.github.jan.supabase.postgrest.query.Order
-import io.github.jan.supabase.realtime.PostgresAction
-import io.github.jan.supabase.realtime.RealtimeChannel
-import io.github.jan.supabase.realtime.channel
-import io.github.jan.supabase.realtime.postgresChangeFlow
-import io.github.jan.supabase.realtime.realtime
 import com.example.powerfix.AppContainer
 import com.example.powerfix.R
 import com.example.powerfix.data.Complaint
 import com.example.powerfix.databinding.DialogCustomerComplaintDetailBinding
 import com.example.powerfix.databinding.FragmentComplaintTrackingBinding
 import com.example.powerfix.ui.common.ComplaintAdapter
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class ComplaintTrackingFragment : Fragment(R.layout.fragment_complaint_tracking) {
     private var _binding: FragmentComplaintTrackingBinding? = null
     private val binding get() = _binding!!
-    private val supabase = AppContainer.supabase
-    private var channel: RealtimeChannel? = null
+    private val complaintRepository get() = AppContainer.complaintRepository
     private lateinit var adapter: ComplaintAdapter
 
     override fun onCreateView(
@@ -54,44 +45,28 @@ class ComplaintTrackingFragment : Fragment(R.layout.fragment_complaint_tracking)
         binding.complaintsRecycler.adapter = adapter
         binding.listProgress.visibility = View.VISIBLE
 
-        val uid = supabase.auth.currentUserOrNull()?.id
-        if (uid == null) {
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user == null) {
             binding.listProgress.visibility = View.GONE
             binding.emptyText.text = getString(R.string.not_signed_in)
             binding.emptyText.visibility = View.VISIBLE
             return
         }
 
-        loadCustomerComplaints(uid)
-
-        // Realtime updates for customer complaints
-        val realtimeChannel = supabase.realtime.channel("public:customer_complaints")
-        channel = realtimeChannel
-        realtimeChannel.postgresChangeFlow<PostgresAction>(schema = "public") {
-            table = "complaints"
-        }.onEach {
-            loadCustomerComplaints(uid)
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
-        viewLifecycleOwner.lifecycleScope.launch { realtimeChannel.subscribe() }
+        observeCustomerComplaints(user.uid)
     }
 
-    private fun loadCustomerComplaints(uid: String) {
+    private fun observeCustomerComplaints(uid: String) {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                val items = supabase.postgrest.from("complaints")
-                    .select {
-                        filter { eq("customer_id", uid) }
-                        order("created_at", order = Order.DESCENDING)
-                        limit(50)
-                    }
-                    .decodeList<Complaint>()
-
-                adapter.submitList(items)
-                binding.emptyText.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
+                complaintRepository.getCustomerComplaintsFlow(uid).collectLatest { items ->
+                    adapter.submitList(items)
+                    binding.emptyText.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
+                    binding.listProgress.visibility = View.GONE
+                }
             } catch (_: Exception) {
                 binding.emptyText.text = getString(R.string.load_failed)
                 binding.emptyText.visibility = View.VISIBLE
-            } finally {
                 binding.listProgress.visibility = View.GONE
             }
         }
@@ -139,11 +114,6 @@ class ComplaintTrackingFragment : Fragment(R.layout.fragment_complaint_tracking)
     }
 
     override fun onDestroyView() {
-        val c = channel
-        if (c != null) {
-            viewLifecycleOwner.lifecycleScope.launch { c.unsubscribe() }
-        }
-        channel = null
         super.onDestroyView()
         _binding = null
     }
