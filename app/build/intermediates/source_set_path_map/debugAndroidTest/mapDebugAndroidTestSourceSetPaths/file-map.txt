@@ -1,0 +1,5 @@
+com.example.powerfix.test.app-jetified-core-1.6.1-0 C:\Users\Jeevanandam\.gradle\caches\8.14.5\transforms\c8687fb378344f129716e7c6f870a218\transformed\jetified-core-1.6.1\res
+com.example.powerfix.test.app-androidTest-1 D:\stitch_smart_utility_complaint_system\android_app\app\build\generated\res\resValues\androidTest\debug
+com.example.powerfix.test.app-mergeDebugAndroidTestResources-2 D:\stitch_smart_utility_complaint_system\android_app\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
+com.example.powerfix.test.app-mergeDebugAndroidTestResources-3 D:\stitch_smart_utility_complaint_system\android_app\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
+com.example.powerfix.test.app-debugAndroidTest-4 D:\stitch_smart_utility_complaint_system\android_app\app\build\intermediates\merged_res\debugAndroidTest\mergeDebugAndroidTestResources

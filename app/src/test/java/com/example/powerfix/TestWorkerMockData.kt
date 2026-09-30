@@ -1,6 +1,7 @@
 package com.example.powerfix
 
 import android.content.Context
+import com.example.powerfix.data.AuthRole
 import com.example.powerfix.data.PowerFixPrefs
 
 object TestWorkerMockData {

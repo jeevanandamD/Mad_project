@@ -119,10 +119,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun updateTnebHint() {
         val selectedRole = binding.roleSpinner.selectedItem?.toString() ?: "Customer"
-        binding.tnebIdInputLayout.hint = if (selectedRole.equals("Worker", ignoreCase = true)) {
-            "TNEB Worker ID"
-        } else {
-            "TNEB Customer ID"
+        binding.tnebIdInputLayout.hint = when (selectedRole.lowercase()) {
+            "worker" -> "TNEB Worker ID"
+            "admin" -> "Associated TNEB ID"
+            else -> "TNEB Customer ID"
         }
     }
 

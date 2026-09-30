@@ -1,0 +1,472 @@
+CHENNAI INSTITUTE OF TECHNOLOGY
+
+DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING
+
+
+PROJECT-BASED LEARNING (PBL) REPORT
+MOBILE APPLICATION DEVELOPMENT (CS4504)
+
+POWER-FIX – An Electricity Complaint App
+Submitted in partial fulfilment of the requirements for the
+Project-Based Learning component of Mobile Application Development
+
+Submitted by
+Jeevanandam D (24CS0374)
+Aswin P J  (24CS0098)]
+
+Under the guidance of
+M Sindhuja
+[Designation, Department of CSE]
+
+
+
+JULY  2026
+
+
+BONAFIDE CERTIFICATE
+
+This is to certify that the Project–Based Learning report titled “POWER-FIX – An Electricity Complaint App” is a Bonafide record of work carried out by Jeevanandam D(24CS0374), Aswin P J(24CS0098) of the Department of Computer Science and Engineering, Chennai Institute of Technology, as part of the continuous, mentor–guided Project-Based Learning (PBL) component of the Mobile Application Development course during the academic year [2026–2027]. This report reflects the team's work across the review cycles listed in Section 1 below, not a single end-of-term submission.
+
+Faculty Mentor	Head of Department
+
+Date:
+
+
+
+
+
+Submitted for the PBL evaluation held on [date].
+
+Faculty Mentor: ________________			PBL In–charge: _______________
+DECLARATION
+We declare that this Project-Based Learning report titled “POWER-FIX – An Electricity Complaint App” reflects our own work carried out under the mentorship of M Sindhuja across the PBL review cycle. All sources of information used have been duly acknowledged and cited.
+
+Team Members:
+Jeevanandam D, 24CS0374
+
+Aswin P J , 24CS0098 
+
+PBL COURSE AND TEAM DETAILS
+
+
+Team Roles and Responsibilities
+
+
+ACKNOWLEDGEMENT
+
+We would like to thank Ms., M. Sindhuja , [Designation], Department of Computer Science and Engineering, for mentoring this project across every review cycle of the PBL—from shaping our driving question in the early weeks to pushing us to test the final model properly before submission. The feedback we got after each review changed the direction of our work more than once, and the project is better for it. We're also grateful to Mrs., Pavithra, Head of the Department, for supporting the PBL structure itself, which gave us room to build something iteratively instead of rushing a single final version.
+
+ABSTRACT
+
+POWER-FIX is a role-based Android mobile application designed to improve the process of registering, managing and tracking electricity-related complaints. Conventional complaint processes may involve phone calls, manual records, repeated follow-ups and limited visibility into worker assignment and complaint progress. POWER-FIX provides a centralized digital workflow for customers, administrators and field workers. Customers can create complaints with relevant details, monitor complaint status and communicate urgent requests to the administrator. Administrators can view complaints, classify them according to service requirements, monitor worker availability and assign suitable workers based on complaint type and location. Workers can view assigned tasks, update their availability and report progress until completion. The application uses Android Studio with Kotlin and XML for mobile development and Supabase Authentication with PostgreSQL for cloud-backed data management. Role-based access ensures that each user sees only the functions relevant to their responsibilities. The system is designed to improve complaint visibility, reduce manual coordination and provide a structured workflow from complaint registration to resolution. The project demonstrates how mobile application development and cloud database services can be combined to support utility-service operations.
+Keywords: Android Application, Electricity Complaint, Supa base, Role-Based Access, Complaint Tracking
+
+
+  
+TABLE OF CONTENTS
+
+CHAPTER 1 – INTRODUCTION
+
+CHAPTER 2 – LITERATURE SURVEY
+
+CHAPTER 3 – EXISTING SYSTEM
+
+CHAPTER 4 – PROPOSED SYSTEM
+
+CHAPTER 5 – SYSTEM ANALYSIS AND DESIGN
+
+CHAPTER 6 – DEVELOPMENT TOOLS AND TECHNOLOGIES
+
+CHAPTER 7 – MOBILE APPLICATION IMPLEMENTATION
+
+CHAPTER 8 – USER INTERFACE AND USER EXPERIENCE
+
+CHAPTER 9 – TESTING AND RESULTS
+
+CHAPTER 10 – APPLICATIONS
+
+CHAPTER 11 – ADVANTAGES AND LIMITATIONS
+
+CHAPTER 12 – CONCLUSION AND FUTURE SCOPE
+
+CHAPTER 13 – REFERENCES
+
+CHAPTER 14 – APPENDIX
+
+
+LIST OF FIGURES
+
+
+ 
+LIST OF TABLES
+ 
+
+
+ 
+
+
+LIST OF ABBREVIATIONS
+Eg. API-APPLICATION PROGRAMMING INTERFACE   DMA-DIRECT MEMORY ACCESS      PBL — Project-Based Learning : [Add others used in your report]
+
+Disclaimer: ----------------------Page break – have to be given here, only then u can change page no in upcoming page as numbers:   Procedure to do page break:(Layout ----break----next page)
+
+CHAPTER 1
+INTRODUCTION
+1.1 Project Overview
+POWER-FIX is a mobile-based electricity complaint management application intended to provide a structured communication channel between electricity consumers, administrators and field workers. The application replaces fragmented complaint handling with a centralized workflow. A customer can register an electricity complaint from a mobile device, provide the complaint location and description, and subsequently monitor its progress. The administrator receives the complaint, evaluates its type and priority, identifies an available worker and assigns the task. The worker can view assigned work, update task progress and report completion. 
+1.2 Problem Statement
+Electricity complaints such as power interruptions, damaged equipment, wiring-related issues and other service problems require timely registration, classification, assignment and resolution. In a manual or loosely coordinated process, customers may have limited visibility into complaint status, administrators may need to coordinate workers manually, and workers may not have a centralized list of assigned tasks. POWER-FIX addresses these coordination and visibility problems through a role-based mobile application backed by a cloud database.
+1.3 Objectives
+Provide a simple mobile interface for registering electricity complaints.
+Provide role-based access for customers, administrators and workers.
+Generate and maintain complaint records with status and location information.
+Allow administrators to classify complaints and assign available workers.
+Allow workers to view assigned complaints and update task progress.
+Provide complaint tracking so customers can monitor service progress.
+Provide an emergency communication channel for urgent customer requests.
+Maintain centralized cloud-backed records using Supabase and PostgreSQL.
+
+1.4 Scope of the Project
+The scope includes Android application development, user authentication, role-based dashboards, complaint registration, complaint tracking, administrator-worker assignment, worker task updates, emergency communication and cloud database integration. The design can be extended to include map-based worker tracking, push notifications, analytics, service-level monitoring and integration with a larger utility-management platform.
+1.5 Target Users
+Customers: register and track electricity complaints and contact administrators for urgent requests.
+Administrators: manage complaints, workers, assignments, statuses and emergency requests.
+Workers / Field Technicians: receive assigned work, manage availability and update task progress.
+
+1.6 Development Platform and Technologies
+The application is developed as an Android mobile application using Android Studio, Kotlin and XML-based layouts. Supa base is used for authentication and cloud database services, with PostgreSQL as the underlying relational database. The project uses a modular role-based workflow so that the same application can serve different categories of users.
+
+CHAPTER 2
+LITERATURE SURVEY
+2.1 Related Existing Projects
+State Electricity Board Web Portals (e.g., TANGEDCO/TNEB Web Portal): Standard civic portals allow consumers to submit online grievances. However, these systems focus primarily on desktop browsers, lack automated real-time status updates, and lack dedicated technician mobile interfaces. 
+Municipal Civic Complaint Apps (e.g., Swachhata, Citizen Grievance Redressal Apps): These applications provide general municipal complaint logging. However, their generic structure does not support utility-specific workflows such as voltage surge identification, live duty toggling, or dynamic technician arrival estimation. 
+Commercial Field Service Platforms (e.g., Salesforce Field Service, Jobber): These systems provide enterprise dispatching and workforce tracking. However, their enterprise-heavy pricing models, proprietary lock-ins, and complex interfaces make them unsuitable for localized civic utilities. 
+2.2 Review of Existing Technologies
+Mobile Client Frameworks: Native Android (Kotlin) provides better device-level performance, lower memory overhead, and more responsive lifecycle handling than hybrid cross-platform wrappers. 
+Cloud Backend Architectures: Traditional relational backends (PostgreSQL, MySQL) require custom REST endpoints, connection pooling, and continuous polling mechanisms. Cloud-native document databases like Google Cloud Firestore offer real-time snapshot listeners, built-in offline caching.
+2.3 Review of Mobile Application Frameworks
+Developing modern mobile applications—particularly for public utility grievance management and distributed field operations—requires choosing a runtime framework that balances hardware access, background execution, UI responsiveness, and data synchronization. Modern mobile architectures are divided between Native Mobile Frameworks and Cross-Platform / Hybrid Alternatives: 
+Native Android (Kotlin & Modern Android Architecture Components):
+Native Android with Kotlin uses modern architectural patterns (MVVM/MVI) supported by official Android Jetpack libraries. Concurrency is managed via Kotlin Coroutines and asynchronous state pipelines, avoiding main thread blocking during I/O operations. Declarative XML layouts combined with ViewBinding and Material Design Components (Material 3) offer deterministic rendering, backward compatibility across Android API levels (such as minSdk 30 to targetSdk 34), and memory efficiency. Crucially, native development provides direct access to device hardware, background task scheduling via WorkManager, telephony services, and network state listeners. 
+Cross-Platform Frameworks (Flutter & React Native):
+Flutter (Dart): Uses a compiled rendering pipeline to draw widgets on a native canvas. While offering uniform cross-platform styling, the compiled engine increases initial APK size, and accessing background location states or hardware-specific telephony hooks requires platform channels.
+React Native (JavaScript/TypeScript): Bridges JavaScript business logic with native UI components. However, bridge serialization can cause frame drops during intensive real-time streaming, and maintenance of third-party native bridge packages introduces version compatibility overhead.
+Backend Integration Approaches (Relational vs. Real-Time Cloud Document DBs):
+Traditional relational backends (PostgreSQL, Supabase) provide strict schemas and relational integrity. However, push-based dispatch updates on mobile clients require explicit polling or WebSocket subscriptions managed by middleware. 
+Serverless document databases (Google Firebase / Cloud Firestore) provide integrated document snapshot listeners, built-in offline caching, and real-time synchronization over persistent WebSockets, matching the operational needs of field technician dispatching.
+
+
+
+
+
+2.4 Comparison Of the Existing Solutions
+
+2.5 Research Gap / Identified Limitations
+A review of contemporary systems, state electricity portals, and civic grievance applications highlights several operational and technical gaps: 
+Fragmentation of the Operational Triad: Most systems link only the consumer and the administrative desk. Once a ticket is accepted, field technician dispatching relies on untracked telephone calls, physical logbooks, or external messaging platforms, leaving the workflow fragmented. 
+Absence of Real-Time Dispatch and Arrival Estimation: Existing platforms display static ticket states (Pending or Resolved) without reflecting active field stages (technician assignment, transit, or active repair). Without a dynamic ETA calculation engine, customers lack arrival estimates and repeatedly contact utility desks. 
+Lack of Priority Triage for Severe Hazards: Conventional portals process life-threatening incidents—such as sparking transformers, severed high-tension conductors, or waterlogged junction boxes—through the same First-In, First-Out (FIFO) queue as minor billing complaints. There is an absence of an immediate, high-priority SOS alert mechanism with dedicated administrator feedback. 
+Absence of Technician Duty Management: Dispatch operators lack real-time visibility into technician availability, leading to work orders being assigned to off-duty or unavailable personnel. A mechanism for technicians to toggle duty availability (Active/Inactive) is missing from existing utility portals. 
+Unverified Registrations and High Sync Latency: Open registration without utility database validation causes duplicate or spurious ticket lodging. Furthermore, reliance on HTTP polling architectures increases network latency, pointing to the need for a native mobile platform with database-level security rules and real-time WebSocket snapshot listeners.
+
+CHAPTER 3
+EXISTING SYSTEM
+3.1 Description
+	In current electricity management processes across regional subdivisions, consumer complaint reporting is predominantly manual. Consumers experiencing outages, damaged transformers, or fluctuations contact a customer care telephone line or visit a local distribution office. 
+	Operators record details in physical logbooks or enter them into basic administrative entry forms. Linesmen and field technicians are contacted individually via telephone to check their availability and location. Once a repair is completed, the technician calls the operator to confirm resolution, after which the record is manually closed.
+3.2 Existing Application Workflow
+
+
+
+
+
+
+
+
+
+3.3 Technologies Used in Existing Systems
+Telephony and Voice Infrastructure: Standard Public Switched Telephone Network (PSTN) landlines, cellular voice networks, Interactive Voice Response (IVR) systems, and manual call-center routing to take consumer complaints over the phone. 
+Physical Ledger Systems: Paper job sheets, registers, and manual logbooks used by substation operators to record fault details, worker dispatch notes, and completion signs.
+Legacy Web Portals: Basic browser-based grievance portals (built with technologies such as HTML/PHP/ASP.NET) designed for desktop submission without dedicated mobile interfaces. 
+On-Premises Relational Databases: Central or regional enterprise databases (such as Oracle DB, Microsoft SQL Server, or MySQL) used for archival record-keeping. 
+One-Way Notification Gateways: Basic SMS gateways and automated email services for dispatching static reference numbers or generic status updates without real-time tracking. 
+Offline Workforce Dispatch Tools: Informal communication channels (such as individual mobile phone calls or basic group messaging) to contact and coordinate field technicians, in place of automated dispatch systems.
+3.4 Drawbacks and Limitations
+Zero Real-Time Visibility: Consumers receive no tracking updates or arrival estimates (ETA), prompting repetitive calls to the helpdesk. 
+Resource Inefficiency: Dispatchers spend excessive time tracking technician locations and duty availability via telephone. 
+Public Safety Risks: Urgent, hazardous incidents (e.g., live sagging conductors, sparking transformers) sit in standard chronological queues alongside minor billing complaints. 
+Record Discrepancies: Unverified paper records cause duplicate complaint entries, lost tickets, and untracked repair histories. 
+
+CHAPTER 4
+PROPOSED SYSTEM
+4.1 Proposed Solution
+	POWER-FIX is an Android mobile platform that unifies consumer reporting, dispatching, and field repair tracking into a single cloud-connected system. The application provides dedicated, role-specific interfaces for Customers, Administrators, and Field Technicians, ensuring clear separation of responsibilities: 
+Customers register structured tickets, track progress in real time, and trigger emergency SOS alerts. 
+Administrators monitor incoming tickets, verify technician availability, and dispatch work orders. 
+Technicians manage their daily availability, receive assigned jobs, and log completion updates directly from their mobile devices. 
+4.2 Features
+Pre-Seeded Registration Verification: Integrates a pre-seeded consumer/technician registry (tneb_ids) in Cloud Firestore to prevent unverified registrations. 
+Category-Driven Complaint Registration: Preset options for electrical breakdown types (e.g., Voltage Fluctuations, Complete Blackout, Sparking Cables, Meter Failure) ensure structured data collection. 
+Interactive Worker Dispatch Dialog: Allows administrators to view all registered workers, check their live availability, and assign work orders. 
+Dynamic ETA Calculation Engine: Automatically calculates and displays expected technician arrival times based on fault type and current workload. 
+Real-Time Technician Workbench: Enables technicians to toggle duty availability (Active/Inactive) and update task progress with instant live synchronization. 
+Dedicated SOS Hazard Broadcast: Provides a high-priority channel for reporting critical hazards directly to administrators. 
+Secure Cloud Persistence: Employs Cloud Firestore security rules to enforce role-based access control at the database layer. 
+4.3 Functional Requirements
+
+4.4 Non-Functional Requirements
+
+4.5 Advantages
+Elimination of Dispatch Bottlenecks: Replaces unsynchronized phone calls with an interactive dispatch console showing real-time worker availability, accelerating task allocation. 
+End-to-End Tracking Visibility: Provides continuous visibility into ticket status and dynamic technician arrival estimates, eliminating the need for repeated follow-up calls to utility offices. 
+Dedicated Emergency Escalation: Isolates urgent electrical hazards into a high-priority SOS channel, allowing dispatchers to address life-threatening situations rapidly. 
+Prevention of Fraudulent Reporting: Pre-registration validation against tneb_ids ensures that only authorized consumers and verified utility workers can create accounts. 
+Robust Data Consistency: Cloud-native document storage and automated session migration (PowerFixPrefs) ensure data persistence, real-time updates, and consistent operation across application updates.
+
+CHAPTER 5
+SYSTEM DESIGN
+5.1 System Architecture
+	The POWER-FIX architecture follows a three-tier model comprising the Presentation Tier (Android Client), the Data & Repository Tier (Business Logic), and the Cloud Backend Tier (Firebase Infrastructure). This structure separates user interaction, state processing, dynamic dispatch calculations, and persistent cloud storage. 
+
+
+
+
+
+
+
+
+
+
+
+
+			Figure 5.1: System Architecture / Block Diagram
+Physical Design
+1. Presentation Layer (Android Native UI)
+View Layer: Constructed using native Android XML layouts and styled with Google Material 3 components. It utilizes ViewBinding for type-safe view references and eliminates runtime lookup overhead. 
+Role-Specific Dashboards:
+Customer Dashboard: Provides pre-filled breakdown selection forms, live ticket status cards, calculated technician Arrival Time (ETA), and a dedicated emergency SOS broadcast button. 
+Administrator Dispatch Console: Offers a triage view of unassigned, active, and resolved tickets alongside an interactive worker dispatch modal displaying live technician duty states. 
+Worker Workbench: Displays assigned repair jobs and provides a duty availability toggle (Active/Inactive) along with task transition controls (In Progress, Resolved). 
+2. Data & Repository Layer (Business Logic)
+AuthRepository: Coordinates authentication against Firebase Auth, verifies authorization registries, routes users to their corresponding dashboard based on their stored profile role, and handles credential migration via PowerFixPrefs. 
+ComplaintRepository: Manages CRUD operations and establishes persistent real-time snapshot listeners with Cloud Firestore. It hosts the Dynamic ETA Engine, which calculates expected technician arrival intervals based on fault severity and technician queue depth. 
+EmergencyRepository: Bypasses general ticket queues to submit high-priority SOS emergency hazard broadcasts directly to administrative dispatchers. 
+3. Cloud Backend & Infrastructure Layer
+Firebase Authentication: Handles user identity verification, secure token issuance, and authenticated session state. 
+Cloud Firestore: A NoSQL serverless document database holding four collections: 
+profiles: User information, contact details, and role assignments (customer, worker, admin). 
+complaints: Ticket details including category, address, assignment references, lifecycle statuses, and ETA values. 
+emergency_requests: High-priority electrical hazard logs and administrative replies. 
+tneb_ids: Pre-seeded registry for consumer and field technician registration validation. 
+Firestore Security Rules: Enforces database-level Role-Based Access Control (RBAC) to ensure that users access and modify only authorized documents. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				Figure 5.1.1: Physical Design
+
+
+5.1.2 Logical Design
+
+
+
+
+
+
+
+
+
+
+
+
+				Figure 5.1.2: Logical Design
+
+5.2 Working Principle
+The application lifecycle begins at user authentication: 
+Authentication & Role Identification: Users enter credentials. The system validates the account and queries the profiles collection to determine the assigned role (customer, admin, or worker), routing the user to the appropriate dashboard. 
+Complaint Lifecycle:
+Customers lodge a breakdown ticket. 
+The ticket appears in the administrator triage queue with status Pending. 
+The administrator selects an active technician and dispatches the task. 
+The ticket status changes to Assigned and the calculated technician ETA is generated. 
+The technician receives the work order, changes status to In Progress, arrives at the location, resolves the fault, and marks the task as Resolved with resolution remarks. 
+All updates synchronize to the customer's tracking screen in real time. 
+Emergency SOS Handling: A customer triggers an SOS emergency broadcast. This alert is immediately highlighted on the administrator dashboard, enabling swift response and instructions.
+
+5.3 UML / Use Case Diagram
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				Figure 5.3: Use Case Diagram
+
+5.4 Flowchart
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				Figure 5.4: Application Flowchart
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CHAPTER 6
+DEVELOPMENT TOOLS AND TECHNOLOGIES
+6.1 Mobile Application Development Platform
+IDE: Android Studio Ladybug / Koala Feature Drop (64-bit) running on Windows 11. 
+Build System: Gradle (Kotlin DSL build.gradle.kts) with Android Gradle Plugin version 8.5.0+.
+Target Environment: Minimum SDK 30 (Android 11.0); Target SDK 34 (Android 14.0). 
+6.2 Programming Language
+The application is written in Kotlin (version 2.1.21). Kotlin provides key advantages for enterprise mobile development: 
+Null Safety: Eliminates NullPointerException errors through nullable and non-nullable types. 
+Coroutines: Provides efficient background threading for network and database operations without blocking the UI. 
+Data Classes: Clean, concise definitions for data models like Complaint, UserProfile, and EmergencyRequest. 
+6.3 User Interface Design
+User interfaces are implemented using Android declarative XML paired with Google Material Design 3 (Material Components): 
+ViewBinding: Eliminates findViewById boilerplate and provides compile-time view safety. 
+Design Elements: Card-based layouts (MaterialCardView), customizable buttons (MaterialButton), responsive text inputs (TextInputLayout), and smooth list rendering (RecyclerView). 
+6.4 Database
+The database tier uses Google Cloud Firestore, a NoSQL serverless document database: 
+Document-Collection Model: Organizes data into collections (profiles, complaints, emergency_requests, tneb_ids). 
+Real-Time Synchronization: Snapshot listeners push database updates to client screens instantly. 
+Offline Caching: Local cache support allows continuous viewing of tickets during network drops. 
+
+6.5 API / Backend Services
+Backend integration utilizes official Firebase Android SDK modules:
+firebase-auth-ktx: Authentication, session token persistence, and identity management. 
+firebase-firestore-ktx: Cloud Firestore querying, batch operations, and security policy execution. 
+firebase-storage-ktx: Cloud storage for maintenance reference images and ticket attachments. 
+6.6 Development Device / Emulator
+Emulator: Android Studio Virtual Device (Medium Phone, Pixel 7 Profile, API 34 image). 
+Physical Hardware: Xiaomi Redmi Note 12 running Android 13 (API 33) connected via USB and ADB wireless debugging.
+6.7 Other Tools and Libraries
+
+CHAPTER 7
+SOFTWARE IMPLEMENTATION
+7.1 Software Requirements
+
+7.2 Mobile Application Program
+The codebase follows an enterprise MVVM-aligned packaging structure under com.example.powerfix:
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+7.3 Database / API Implementation
+The database tier is built around four collections in Cloud Firestore: 
+
+7.4 Application Testing / Emulator
+[Insert Figure 7.4: Application Testing using Android Emulator / Physical Device here.]
+
+CHAPTER 8
+MOBILE APPLICATION IMPLEMENTATION
+8.1 Application Setup and Configuration
+[Write content for project creation, SDK configuration, dependencies, and application setup here.]
+8.2 Module Integration
+[Write content for integrating the different application modules, database, APIs, authentication, and other services here.]
+8.3 Prototype Development
+[Insert Figure 8.3: Screenshot of Mobile Application Prototype Development here.]
+8.4 Working of the Mobile Application
+[Write content describing the step-by-step working of the developed mobile application here.]
+8.5 Screenshots of the Developed Application
+[Insert Figure 8.5: Screenshots of the Developed Mobile Application here.]
+
+ 
+CHAPTER 9
+TESTING AND RESULTS
+9.1 Testing Procedure
+[Write content for Testing Procedure here.]
+9.2 Test Cases
+[Write content for Test Cases here.]
+9.3 Experimental Results
+[Insert Table 9.3: Experimental Result Comparison here.]
+9.4 Output Screenshot
+[Insert Figure 9.4: Output Screenshot here.]
+9.5 Performance Analysis
+[Insert Table 9.5: Performance Analysis here.]
+CHAPTER 10
+APPLICATIONS
+[Write content for Applications here.]
+CHAPTER 11
+ADVANTAGES AND LIMITATIONS
+[Write content for Advantages and Limitations here.]
+CHAPTER 12
+CONCLUSION AND FUTURE SCOPE
+[Write content for Conclusion and Future Scope here.]
+CHAPTER 13
+REFERENCES
+Guidance: Use IEEE numbered style, matching in-text citation numbers to this list, in order of first appearance. 8–15 references is typical for a small-scale PBL report. Include the dataset source as a reference too.
+[1] A. Author, "Title of paper," Journal/Conference Name, vol. X, no. Y, pp. XX–XX, Year.
+[2] [Dataset source], "Dataset name," [Repository], [Year]. [Online]. Available: [URL].
+[3] [Add remaining references in the same numbered format.]
+
+APPENDIX
+Guidance: Appendix pages do not count toward the 20-page limit. Use for full code listings, extra result tables, the complete weekly log, or a project GitHub/Colab link.
+A.1 Full source code: [GitHub/Colab link]
+A.2 Complete weekly PBL log (if longer than Table 3.1) and mentor sign-offs.
+A.3 Self and Peer Assessment
+Guidance: Many PBL courses require each member to rate their own and teammates' contribution — keep this in the appendix, not the main chapters.
+

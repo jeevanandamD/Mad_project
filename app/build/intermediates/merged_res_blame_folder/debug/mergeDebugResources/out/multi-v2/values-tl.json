@@ -4,6 +4,23 @@
             "outputFile": "com.example.powerfix.app-mergeDebugResources-53:/values-tl/values-tl.xml",
             "map": [
                 {
+                    "source": "C:\\Users\\Jeevanandam\\.gradle\\caches\\8.14.5\\transforms\\9943ad8e621beeda809599308bdf6b6a\\transformed\\navigation-ui-2.8.7\\res\\values-tl\\values-tl.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,169",
+                        "endColumns": "113,122",
+                        "endOffsets": "164,287"
+                    },
+                    "to": {
+                        "startLines": "135,136",
+                        "startColumns": "4,4",
+                        "startOffsets": "12718,12832",
+                        "endColumns": "113,122",
+                        "endOffsets": "12827,12950"
+                    }
+                },
+                {
                     "source": "C:\\Users\\Jeevanandam\\.gradle\\caches\\8.14.5\\transforms\\64e31552a7adb316dcd6cf9002b5d8c1\\transformed\\material-1.12.0\\res\\values-tl\\values-tl.xml",
                     "from": {
                         "startLines": "2,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80",
@@ -71,23 +88,6 @@
                         "startOffsets": "4793,4900,5076,5214,5323,5481,5617,5739,5997,6176,6283,6461,6599,6761,6940,7008,7074",
                         "endColumns": "106,175,137,108,157,135,121,112,178,106,177,137,161,178,67,65,80",
                         "endOffsets": "4895,5071,5209,5318,5476,5612,5734,5847,6171,6278,6456,6594,6756,6935,7003,7069,7150"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Jeevanandam\\.gradle\\caches\\8.14.5\\transforms\\5f170582fb6618291ad14b0b9d38d14a\\transformed\\navigation-ui-2.7.7\\res\\values-tl\\values-tl.xml",
-                    "from": {
-                        "startLines": "2,3",
-                        "startColumns": "4,4",
-                        "startOffsets": "55,169",
-                        "endColumns": "113,122",
-                        "endOffsets": "164,287"
-                    },
-                    "to": {
-                        "startLines": "135,136",
-                        "startColumns": "4,4",
-                        "startOffsets": "12718,12832",
-                        "endColumns": "113,122",
-                        "endOffsets": "12827,12950"
                     }
                 },
                 {

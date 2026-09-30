@@ -28,6 +28,7 @@ enum class AuthRole(val dbValue: String, val display: String) {
         fun fromDisplay(value: String?): AuthRole? = when (value?.trim()) {
             "Customer" -> CUSTOMER
             "Worker" -> WORKER
+            "Admin" -> ADMIN
             else -> null
         }
     }
